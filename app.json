@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "popdoc-mobile",
+    "slug": "popdoc-mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "popdoc-mobile"
+}
