@@ -5,7 +5,7 @@ import {
   Header,
   CategoryLabel,
   CategoryText,
-  TotalTile,
+  TotalTileCount,
   Title,
 } from './styles';
 
@@ -16,7 +16,7 @@ const FavouriteCollection: React.FC = () => {
         <CategoryLabel>
           <CategoryText>Personal</CategoryText>
         </CategoryLabel>
-        <TotalTile>Total 14 tiles</TotalTile>
+        <TotalTileCount>Total 14 tiles</TotalTileCount>
       </Header>
 
       <Title>My personal Instagram about psychology</Title>

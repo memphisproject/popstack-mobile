@@ -46,14 +46,13 @@ export const FavouritesWrapper = styled.ScrollView.attrs({
   showsHorizontalScrollIndicator: false,
   contentContainerStyle: { paddingHorizontal: 24 },
 })`
-  position: absolute;
   width: 100%;
-  margin-top: ${RFPercentage(20)}px;
+  max-height: ${RFPercentage(25)}px;
+  margin-top: ${RFValue(14)}px;
 `;
 
 export const CollectionListWrapper = styled.View`
   flex: 1%;
   padding: 0 24px;
-
-  margin-top: ${RFPercentage(30)}px;
+  margin-top: ${RFValue(14)}px;
 `;

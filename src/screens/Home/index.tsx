@@ -41,7 +41,6 @@ export const Home: React.FC = () => {
         <CollectionListItem />
         <CollectionListItem />
         <CollectionListItem />
-        <CollectionListItem />
       </CollectionListWrapper>
     </Container>
   );

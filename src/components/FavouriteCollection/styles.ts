@@ -23,6 +23,7 @@ export const CategoryLabel = styled.View`
   padding: 4px;
   border-radius: 5px;
 `;
+
 export const CategoryText = styled.Text`
   padding: 2px;
 
@@ -30,12 +31,17 @@ export const CategoryText = styled.Text`
   font-size: ${RFValue(10)}px;
   font-family: ${({ theme }) => theme.fonts.medium};
 `;
-export const TotalTile = styled.Text`
+
+export const TotalTileCount = styled.Text`
   color: ${({ theme }) => theme.colors.text_reverse};
   font-size: ${RFValue(10)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
-export const Title = styled.Text`
+
+export const Title = styled.Text.attrs({
+  ellipsizeMode: 'tail',
+  numberOfLines: 3,
+})`
   margin-top: 10px;
 
   color: ${({ theme }) => theme.colors.text_reverse};
