@@ -1,11 +1,9 @@
 {
   "plugins": [
     "import",
-    "prettier",
-    "flowtype"
+    "prettier"
   ],
   "extends": [
-    "plugin:flowtype/recommended",
     "plugin:@typescript-eslint/recommended",
     "@react-native-community",
     "prettier",
@@ -43,13 +41,10 @@
     "import/no-unused-modules": 0,
     "import/no-deprecated": 0,
     "@typescript-eslint/indent": 0,
-    "import/no-anonymous-default-export": 2,
-    "import/no-default-export": 2,
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": ["error", { "additionalHooks": "(useMemoOne)" }],
     "jest/no-identical-title": 2,
     "jest/valid-expect": 2,
-    "camelcase": 2,
     "prefer-destructuring": 2,
     "no-nested-ternary": 2,
     "comma-dangle": 0,

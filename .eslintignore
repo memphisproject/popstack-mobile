@@ -5,3 +5,4 @@ dist
 ios
 android
 .expo
+*.d.ts
