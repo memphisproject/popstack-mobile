@@ -17,21 +17,6 @@ export const Header = styled.View`
   align-items: center;
 `;
 
-export const CategoryLabel = styled.View`
-  background-color: ${({ theme }) => theme.colors.shape_light};
-
-  padding: 4px;
-  border-radius: 5px;
-`;
-
-export const CategoryText = styled.Text`
-  padding: 2px;
-
-  color: ${({ theme }) => theme.colors.text_reverse};
-  font-size: ${RFValue(10)}px;
-  font-family: ${({ theme }) => theme.fonts.medium};
-`;
-
 export const TotalTileCount = styled.Text`
   color: ${({ theme }) => theme.colors.text_reverse};
   font-size: ${RFValue(10)}px;

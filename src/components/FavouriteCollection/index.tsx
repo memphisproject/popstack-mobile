@@ -1,21 +1,14 @@
 import React from 'react';
 
-import {
-  Container,
-  Header,
-  CategoryLabel,
-  CategoryText,
-  TotalTileCount,
-  Title,
-} from './styles';
+import CategoryLabel from '../CategoryLabel';
+
+import { Container, Header, TotalTileCount, Title } from './styles';
 
 const FavouriteCollection: React.FC = () => {
   return (
     <Container>
       <Header>
-        <CategoryLabel>
-          <CategoryText>Personal</CategoryText>
-        </CategoryLabel>
+        <CategoryLabel text="Psychology" />
         <TotalTileCount>Total 14 tiles</TotalTileCount>
       </Header>
 

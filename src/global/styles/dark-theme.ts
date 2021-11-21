@@ -2,7 +2,7 @@ export default {
   colors: {
     background: '#000000',
     shape: '#323738',
-    shape_light: 'rgba(0,0,69,0.2)',
+    shape_light: 'rgba(211,211,232,0.3)',
     text: '#FFFFFF',
     text_light: '#B0B0B0',
     text_reverse: '#F9F9F9',
