@@ -9,9 +9,10 @@ import {
 import AppLoading from 'expo-app-loading';
 
 import theme from './src/global/styles/theme';
-// import darkTheme from './src/global/styles/dark-theme';
+import darkTheme from './src/global/styles/dark-theme';
 import { Home } from './src/screens/Home';
 import Collection from './src/screens/Collection';
+import TileDetails from './src/modals/TileDetails';
 
 const App: React.FC = () => {
   const [fontLoaded] = useFonts({
@@ -26,7 +27,9 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Collection />
+      {/*<Home />*/}
+      {/*<Collection />*/}
+      <TileDetails />
     </ThemeProvider>
   );
 };
