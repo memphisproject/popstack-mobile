@@ -19,7 +19,7 @@ export interface Collections {
   title: string;
 }
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <Container>
       <Header>
@@ -45,3 +45,5 @@ export const Home: React.FC = () => {
     </Container>
   );
 };
+
+export default Home;

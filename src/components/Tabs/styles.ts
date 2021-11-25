@@ -9,7 +9,7 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape_light};
 
   padding: 5px 0;
-  border-radius: 25px;
+  border-radius: ${RFValue(25)}px;
 
   flex-direction: row;
   align-items: center;
@@ -22,7 +22,7 @@ export const TabWrapper = styled.TouchableOpacity<TabProps>`
       background-color: ${({ theme }) => theme.colors.shape_light};
     `}
   border-radius: 20px;
-  padding: 10px ${RFValue(20)}px;
+  padding: 10px ${RFValue(25)}px;
 `;
 export const Tab = styled.Text<TabProps>`
   color: ${({ theme, isActive }) =>
