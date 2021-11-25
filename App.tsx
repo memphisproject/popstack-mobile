@@ -13,6 +13,7 @@ import darkTheme from './src/global/styles/dark-theme';
 import { Home } from './src/screens/Home';
 import Collection from './src/screens/Collection';
 import TileDetails from './src/modals/TileDetails';
+import AppProvider from './src/hooks';
 
 const App: React.FC = () => {
   const [fontLoaded] = useFonts({
@@ -27,9 +28,10 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {/*<Home />*/}
-      {/*<Collection />*/}
-      <TileDetails />
+      <AppProvider>
+        {/*<Home />*/}
+        <Collection />
+      </AppProvider>
     </ThemeProvider>
   );
 };

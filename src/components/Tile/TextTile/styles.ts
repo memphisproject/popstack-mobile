@@ -6,3 +6,5 @@ export const Text = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
+
+export const Container = styled.TouchableOpacity``;

@@ -15,7 +15,7 @@ export const Container = styled.View`
   align-items: center;
   justify-content: space-evenly;
 `;
-export const TabWrapper = styled.View<TabProps>`
+export const TabWrapper = styled.TouchableOpacity<TabProps>`
   ${({ isActive }) =>
     isActive &&
     css`

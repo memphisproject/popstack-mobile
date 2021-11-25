@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Modal } from 'react-native';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
+import TileDetails from '../../modals/TileDetails';
 
 import {
   Container,
@@ -18,6 +20,16 @@ import {
 } from './styles';
 
 const Collection: React.FC = () => {
+  const [tileDetailsModalOpen, setTileDetailsModalOpen] = useState(false);
+
+  const handleTileDetailsModalClose = () => {
+    setTileDetailsModalOpen(false);
+  };
+
+  const handleTileDetailsModalOpen = () => {
+    setTileDetailsModalOpen(true);
+  };
+
   return (
     <Container>
       <Header>
@@ -47,10 +59,14 @@ const Collection: React.FC = () => {
         </SocialMetric>
       </SocialMetricsBar>
       <TilesListWrapper>
-        <TextTile />
-        <TextTile />
-        <TextTile />
+        <TextTile onPress={handleTileDetailsModalOpen} />
+        <TextTile onPress={handleTileDetailsModalOpen} />
+        <TextTile onPress={handleTileDetailsModalOpen} />
       </TilesListWrapper>
+
+      <Modal visible={tileDetailsModalOpen}>
+        <TileDetails closeTileDetails={handleTileDetailsModalClose} />
+      </Modal>
     </Container>
   );
 };
