@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import Tabs from '../../components/Tabs';
+import Tabs, { tabsRegistry } from '../../components/Tabs';
 import TextTileEditor from '../../components/Tile/TextTileEditor';
 import { useTabs } from '../../hooks/useTabs';
 
@@ -17,8 +17,6 @@ interface TileDetailsProps {
   closeTileDetails: () => void;
 }
 
-const initialActiveTab = 'tileDetails@editor';
-
 const TileDetails: React.FC<TileDetailsProps> = ({ closeTileDetails }) => {
   const [selectedTab, setSelectedTab] = useState<string>('');
   const { activeTab } = useTabs();
@@ -30,12 +28,12 @@ const TileDetails: React.FC<TileDetailsProps> = ({ closeTileDetails }) => {
   return (
     <Container>
       <TabsContainer>
-        <Tabs initialActiveTab={initialActiveTab} />
+        <Tabs initialActiveTab={tabsRegistry.editor} />
       </TabsContainer>
       <EditorContainer>
-        {selectedTab === 'tileDetails@editor' && <TextTileEditor />}
-        {selectedTab === 'tileDetails@comments' && <View />}
-        {selectedTab === 'tileDetails@history' && <View />}
+        {selectedTab === tabsRegistry.editor && <TextTileEditor />}
+        {selectedTab === tabsRegistry.comments && <View />}
+        {selectedTab === tabsRegistry.history && <View />}
       </EditorContainer>
       <CloseTabWrapper>
         <CloseButton title="X" onPress={closeTileDetails} />
