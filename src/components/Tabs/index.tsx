@@ -19,7 +19,7 @@ const Tabs: React.FC<TabsProps> = ({ initialActiveTab }) => {
 
   useEffect(() => {
     setActiveTab(initialActiveTab);
-  });
+  }, []);
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
