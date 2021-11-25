@@ -4,13 +4,13 @@ import { View } from 'react-native';
 import Tabs, { tabsRegistry } from '../../components/Tabs';
 import TextTileEditor from '../../components/Tile/TextTileEditor';
 import { useTabs } from '../../hooks/useTabs';
+import Button from '../../components/Button';
 
 import {
   Container,
   TabsContainer,
   EditorContainer,
   CloseTabWrapper,
-  CloseButton,
 } from './styles';
 
 interface TileDetailsProps {
@@ -36,7 +36,7 @@ const TileDetails: React.FC<TileDetailsProps> = ({ closeTileDetails }) => {
         {selectedTab === tabsRegistry.history && <View />}
       </EditorContainer>
       <CloseTabWrapper>
-        <CloseButton title="X" onPress={closeTileDetails} />
+        <Button title="X" onPress={closeTileDetails} />
       </CloseTabWrapper>
     </Container>
   );

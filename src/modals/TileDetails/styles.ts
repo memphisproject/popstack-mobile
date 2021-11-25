@@ -16,5 +16,8 @@ export const EditorContainer = styled.View`
   flex: 1;
   padding: 24px;
 `;
-export const CloseTabWrapper = styled.View``;
-export const CloseButton = styled.Button``;
+export const CloseTabWrapper = styled.View`
+  padding: 0 24px;
+  margin-bottom: 24px;
+  align-items: center;
+`;
