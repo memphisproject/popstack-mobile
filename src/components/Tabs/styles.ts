@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 interface TabProps {
   isActive: boolean;
@@ -22,7 +22,7 @@ export const TabWrapper = styled.TouchableOpacity<TabProps>`
       background-color: ${({ theme }) => theme.colors.shape_light};
     `}
   border-radius: 20px;
-  padding: 10px ${RFValue(25)}px;
+  padding: 10px ${RFPercentage(3)}px;
 `;
 export const Tab = styled.Text<TabProps>`
   color: ${({ theme, isActive }) =>

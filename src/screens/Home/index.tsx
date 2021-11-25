@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import FavouriteCollection from '../../components/FavouriteCollection';
 import CollectionListItem from '../../components/CollectionListItem';
@@ -20,6 +21,8 @@ export interface Collections {
 }
 
 const Home: React.FC = () => {
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Header>
@@ -32,9 +35,21 @@ const Home: React.FC = () => {
       </Header>
 
       <FavouritesWrapper>
-        <FavouriteCollection />
-        <FavouriteCollection />
-        <FavouriteCollection />
+        <FavouriteCollection
+          onPress={() => {
+            navigation.navigate('Collection' as never);
+          }}
+        />
+        <FavouriteCollection
+          onPress={() => {
+            navigation.navigate('Collection' as never);
+          }}
+        />
+        <FavouriteCollection
+          onPress={() => {
+            navigation.navigate('Collection' as never);
+          }}
+        />
       </FavouritesWrapper>
 
       <CollectionListWrapper>

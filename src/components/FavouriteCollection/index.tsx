@@ -4,9 +4,15 @@ import CategoryLabel from '../CategoryLabel';
 
 import { Container, Header, TotalTileCount, Title } from './styles';
 
-const FavouriteCollection: React.FC = () => {
+interface FavouriteCollectionProps {
+  onPress: () => void;
+}
+
+const FavouriteCollection: React.FC<FavouriteCollectionProps> = ({
+  onPress,
+}) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Header>
         <CategoryLabel text="Psychology" />
         <TotalTileCount>Total 14 tiles</TotalTileCount>
