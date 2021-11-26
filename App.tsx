@@ -10,6 +10,7 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 
 import theme from './src/global/styles/theme';
+import darkTheme from './src/global/styles/dark-theme';
 import AppProvider from './src/hooks';
 import AppRoutes from './src/routes/app.routes';
 
@@ -25,7 +26,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       <AppProvider>
         <NavigationContainer>
           <AppRoutes />

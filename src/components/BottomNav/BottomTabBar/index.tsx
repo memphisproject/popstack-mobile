@@ -10,6 +10,7 @@ import { mix } from 'react-native-redash';
 import StaticElement from '../StaticElements';
 
 import {
+  NavBarWrapper,
   Container,
   CreateButton,
   CreateButtonClickHandler,
@@ -56,7 +57,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, ...rest }) => {
   };
 
   return (
-    <>
+    <NavBarWrapper>
       <Container {...rest}>
         <NavButtonsWrapper>
           <StaticElement
@@ -108,7 +109,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, ...rest }) => {
           </ActionWrapper>
         </CreateActions>
       </CreateActionsWrapper>
-    </>
+    </NavBarWrapper>
   );
 };
 

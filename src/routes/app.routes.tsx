@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTheme } from 'styled-components';
 
 import Home from '../screens/Home';
 import Collection from '../screens/Collection';
@@ -8,9 +9,16 @@ import BottomTabBar from '../components/BottomNav/BottomTabBar';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const AppRoutes: React.FC = () => {
+  const theme = useTheme();
+
   return (
     <Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+        },
+      }}
       tabBar={props => <BottomTabBar {...props} />}
     >
       <Screen name="Home" component={Home} />

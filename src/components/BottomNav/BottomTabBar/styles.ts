@@ -7,6 +7,9 @@ interface CreateButtonProps {
   isOpened: boolean;
 }
 
+export const NavBarWrapper = styled.View`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape_light};
 
