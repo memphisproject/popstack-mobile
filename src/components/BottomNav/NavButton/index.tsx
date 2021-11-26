@@ -7,7 +7,7 @@ interface StaticElementProps {
   onPress: () => void;
 }
 
-const StaticElement: React.FC<StaticElementProps> = ({ icon, onPress }) => {
+const NavButton: React.FC<StaticElementProps> = ({ icon, onPress }) => {
   return (
     <Container onPress={onPress}>
       <Icon name={icon} />
@@ -15,4 +15,4 @@ const StaticElement: React.FC<StaticElementProps> = ({ icon, onPress }) => {
   );
 };
 
-export default StaticElement;
+export default NavButton;
