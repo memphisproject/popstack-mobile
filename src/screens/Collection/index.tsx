@@ -60,8 +60,6 @@ const Collection: React.FC = () => {
       </SocialMetricsBar>
       <TilesListWrapper>
         <TextTile onPress={handleTileDetailsModalOpen} />
-        <TextTile onPress={handleTileDetailsModalOpen} />
-        <TextTile onPress={handleTileDetailsModalOpen} />
       </TilesListWrapper>
 
       <Modal visible={tileDetailsModalOpen}>
