@@ -12,7 +12,7 @@ interface CreateActionsProps {
   isOpen: 0 | 1;
 }
 
-const CreateTileAction: React.FC<CreateActionsProps> = ({ isOpen }) => {
+const CreateTileActionList: React.FC<CreateActionsProps> = ({ isOpen }) => {
   const animation = useAnimatedStyle(() => ({
     opacity: interpolate(isOpen, [0.9, 1], [0, 1], Extrapolate.CLAMP),
     transform: [
@@ -43,4 +43,4 @@ const CreateTileAction: React.FC<CreateActionsProps> = ({ isOpen }) => {
   );
 };
 
-export default CreateTileAction;
+export default CreateTileActionList;

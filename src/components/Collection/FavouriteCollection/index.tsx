@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CategoryLabel from '../CategoryLabel';
+import CategoryLabel from '../../CategoryLabel';
 
 import { Container, Header, TotalTileCount, Title } from './styles';
 

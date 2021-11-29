@@ -1,0 +1,50 @@
+{
+  "collection": [
+    {
+      "id": "collection@1",
+      "title": "Collection 1",
+      "content": [
+        {
+          "id": "tile@1",
+          "parent": "0",
+          "order": 1
+        },
+        {
+          "id": "tile@2",
+          "parent": "0",
+          "order": 2
+        }
+      ]
+    }
+  ],
+  "tile": [
+    {
+      "id": "tile@1",
+      "type": "textTile",
+      "content": {
+        "html": "<p>This is a tile </p>",
+        "images": [],
+        "urls": []
+      },
+      "tags": []
+    },
+    {
+      "id": "tile@2",
+      "type": "textTile",
+      "content": {
+        "html": "<p>This is another tile </p>",
+        "images": [],
+        "urls": []
+      },
+      "tags": []
+    }
+  ],
+  "comments": [
+    {
+      "id": "comment@1",
+      "topic": "tile@1",
+      "parent": "0",
+      "content": "This is a comment"
+    }
+  ]
+}
