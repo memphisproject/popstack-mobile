@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import FavouriteCollection from '../../components/FavouriteCollection';
-import CollectionListItem from '../../components/CollectionListItem';
+import FavouriteCollection from '../../components/Collection/FavouriteCollection';
+import CollectionListItem from '../../components/Collection/CollectionListItem';
 
 import {
   Container,

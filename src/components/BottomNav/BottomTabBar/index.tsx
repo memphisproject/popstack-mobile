@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-import CreateTileAction from '../CreateTileActions';
 import NavButton from '../NavButton';
 import AnimatedCreateButton from '../AnimatedCreateButton';
+import CreateTileActionList from '../CreateTileActionsList';
 
 import {
   NavBarWrapper,
@@ -56,7 +56,7 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, ...rest }) => {
         </NavButtonsWrapper>
       </NavBar>
       <CreateActionsWrapper>
-        <CreateTileAction isOpen={createButtonClicked} />
+        <CreateTileActionList isOpen={createButtonClicked} />
       </CreateActionsWrapper>
     </NavBarWrapper>
   );
