@@ -1,10 +1,10 @@
-interface Collection {
+export interface Collection {
   id: string;
   title: string;
   content: string;
 }
 
-interface Tile {
+export interface Tile {
   id: string;
   type: string;
   content: {
@@ -15,7 +15,7 @@ interface Tile {
   tags: string[];
 }
 
-interface Comments {
+export interface Comments {
   id: string;
   topic: string;
   parent: string;

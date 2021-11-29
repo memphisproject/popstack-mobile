@@ -1,6 +1,12 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-x-helper';
+import { FlatList } from 'react-native';
+
+import type { Collection } from '../../utils/models';
 
 export const Container = styled.View`
   flex: 1;
@@ -54,5 +60,15 @@ export const FavouritesWrapper = styled.ScrollView.attrs({
 export const CollectionListWrapper = styled.View`
   flex: 1%;
   padding: 0 24px;
+  margin-bottom: ${RFValue(20)}px;
   margin-top: ${RFValue(14)}px;
 `;
+
+export const CollectionList = styled(
+  FlatList as new () => FlatList<Collection>,
+).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getBottomSpace(),
+  },
+})``;

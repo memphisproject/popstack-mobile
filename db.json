@@ -15,6 +15,50 @@
           "order": 2
         }
       ]
+    },
+    {
+      "id": "collection@2",
+      "title": "Collection 2",
+      "content": [
+        {
+          "id": "tile@1",
+          "parent": "0",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "collection@3",
+      "title": "Collection 2",
+      "content": [
+        {
+          "id": "tile@1",
+          "parent": "0",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "collection@4",
+      "title": "Collection 2",
+      "content": [
+        {
+          "id": "tile@1",
+          "parent": "0",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "collection@5",
+      "title": "Collection 2",
+      "content": [
+        {
+          "id": "tile@1",
+          "parent": "0",
+          "order": 1
+        }
+      ]
     }
   ],
   "tile": [
@@ -35,6 +79,34 @@
         "html": "<p>This is another tile </p>",
         "images": [],
         "urls": []
+      },
+      "tags": []
+    },
+    {
+      "id": "tile@3",
+      "type": "linkTile",
+      "content": {
+        "uri": "https://wired.com",
+        "images": [],
+        "urls": []
+      },
+      "tags": []
+    },
+    {
+      "id": "tile@3",
+      "type": "queryTile",
+      "content": {
+        "method": "GET",
+        "uri": "https://api.com/device",
+        "input": {
+          "param": {
+            "id": 3
+          }
+        },
+        "output": {
+          "id": "string",
+          "name": "string"
+        }
       },
       "tags": []
     }

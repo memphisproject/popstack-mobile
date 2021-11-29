@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import FavouriteCollection from '../../components/Collection/FavouriteCollection';
 import CollectionListItem from '../../components/Collection/CollectionListItem';
+import type { Collection } from '../../utils/models';
+import api from '../../services/apiClient';
 
 import {
   Container,
@@ -13,15 +15,25 @@ import {
   InvisibleButton,
   FavouritesWrapper,
   CollectionListWrapper,
+  CollectionList,
 } from './styles';
 
-export interface Collections {
-  id: string;
-  title: string;
-}
+const fetchCollections = async (): Promise<Collection[]> => {
+  const response = await api.get('/collection');
+
+  return response.data;
+};
 
 const Home: React.FC = () => {
+  const [collectionList, setCollectionList] = useState<Collection[]>([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedCollectionList = await fetchCollections();
+      setCollectionList(fetchedCollectionList);
+    })();
+  }, [setCollectionList]);
 
   return (
     <Container>
@@ -31,31 +43,26 @@ const Home: React.FC = () => {
           <Subtitle>Total 10 collections</Subtitle>
         </TitleWrapper>
         <InvisibleButton>+ New Collection</InvisibleButton>
-        {/*<InvisibleButton />*/}
       </Header>
 
       <FavouritesWrapper>
-        <FavouriteCollection
-          onPress={() => {
-            navigation.navigate('Collection' as never);
-          }}
-        />
-        <FavouriteCollection
-          onPress={() => {
-            navigation.navigate('Collection' as never);
-          }}
-        />
-        <FavouriteCollection
-          onPress={() => {
-            navigation.navigate('Collection' as never);
-          }}
-        />
+        {collectionList &&
+          collectionList.map(collection => (
+            <FavouriteCollection
+              key={collection.id}
+              onPress={() => {
+                navigation.navigate('Collection' as never);
+              }}
+            />
+          ))}
       </FavouritesWrapper>
 
       <CollectionListWrapper>
-        <CollectionListItem />
-        <CollectionListItem />
-        <CollectionListItem />
+        <CollectionList
+          data={collectionList}
+          keyExtractor={(item: Collection) => item.id}
+          renderItem={({ item: Collection }) => <CollectionListItem />}
+        />
       </CollectionListWrapper>
     </Container>
   );

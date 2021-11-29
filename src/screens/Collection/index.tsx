@@ -39,11 +39,13 @@ const Collection: React.FC = () => {
 
         <Icon name="info" />
       </Header>
+
       <CategoriesList>
         <CategoryLabel text="Psychology" />
         <CategoryLabel text="Social Media" />
         <CategoryLabel text="Yada yada" />
       </CategoriesList>
+
       <SocialMetricsBar>
         <SocialMetric>
           <SocialMetricIcon name="eye" />
@@ -58,6 +60,7 @@ const Collection: React.FC = () => {
           <SocialMetricLabel>2</SocialMetricLabel>
         </SocialMetric>
       </SocialMetricsBar>
+
       <TilesListWrapper>
         <TextTile onPress={handleTileDetailsModalOpen} />
       </TilesListWrapper>
