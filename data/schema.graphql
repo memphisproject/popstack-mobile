@@ -1,0 +1,1778 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""An object with globally unique ID"""
+interface Node {
+  """A globally unique identifier"""
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""
+columns and relationships of "collections"
+"""
+type collections implements Node {
+  """An object relationship"""
+  collections_tile: collections_tiles
+  created_at: timestamptz!
+  id: ID!
+  title: String!
+  updated_at: timestamptz!
+
+  """An array relationship"""
+  users_collections(
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): [users_collections!]!
+
+  """An aggregate relationship"""
+  users_collections_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collections_aggregate!
+
+  """An array relationship connection"""
+  users_collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collectionsConnection!
+}
+
+"""
+A Relay connection object on "collections"
+"""
+type collectionsConnection {
+  edges: [collectionsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type collectionsEdge {
+  cursor: String!
+  node: collections!
+}
+
+"""
+Boolean expression to filter rows from the table "collections". All fields are combined with a logical 'AND'.
+"""
+input collections_bool_exp {
+  _and: [collections_bool_exp!]
+  _not: collections_bool_exp
+  _or: [collections_bool_exp!]
+  collections_tile: collections_tiles_bool_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  title: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  users_collections: users_collections_bool_exp
+}
+
+"""
+unique or primary key constraints on table "collections"
+"""
+enum collections_constraint {
+  """unique or primary key constraint"""
+  collections_pkey
+}
+
+"""
+input type for inserting data into table "collections"
+"""
+input collections_insert_input {
+  collections_tile: collections_tiles_obj_rel_insert_input
+  created_at: timestamptz
+  id: uuid
+  title: String
+  updated_at: timestamptz
+  users_collections: users_collections_arr_rel_insert_input
+}
+
+"""
+response of any mutation on the table "collections"
+"""
+type collections_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [collections!]!
+}
+
+"""
+input type for inserting object relation for remote table "collections"
+"""
+input collections_obj_rel_insert_input {
+  data: collections_insert_input!
+
+  """on conflict condition"""
+  on_conflict: collections_on_conflict
+}
+
+"""
+on conflict condition type for table "collections"
+"""
+input collections_on_conflict {
+  constraint: collections_constraint!
+  update_columns: [collections_update_column!]! = []
+  where: collections_bool_exp
+}
+
+"""Ordering options when selecting data from "collections"."""
+input collections_order_by {
+  collections_tile: collections_tiles_order_by
+  created_at: order_by
+  id: order_by
+  title: order_by
+  updated_at: order_by
+  users_collections_aggregate: users_collections_aggregate_order_by
+}
+
+"""primary key columns input for table: collections"""
+input collections_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "collections"
+"""
+enum collections_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "collections"
+"""
+input collections_set_input {
+  created_at: timestamptz
+  id: uuid
+  title: String
+  updated_at: timestamptz
+}
+
+"""
+columns and relationships of "collections_tiles"
+"""
+type collections_tiles implements Node {
+  """An object relationship"""
+  collection: collections!
+  collection_fk: uuid!
+  created_at: timestamptz!
+  id: ID!
+  order: Int!
+
+  """An object relationship"""
+  tile: tiles!
+  tile_fk: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+A Relay connection object on "collections_tiles"
+"""
+type collections_tilesConnection {
+  edges: [collections_tilesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type collections_tilesEdge {
+  cursor: String!
+  node: collections_tiles!
+}
+
+"""
+Boolean expression to filter rows from the table "collections_tiles". All fields are combined with a logical 'AND'.
+"""
+input collections_tiles_bool_exp {
+  _and: [collections_tiles_bool_exp!]
+  _not: collections_tiles_bool_exp
+  _or: [collections_tiles_bool_exp!]
+  collection: collections_bool_exp
+  collection_fk: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  order: Int_comparison_exp
+  tile: tiles_bool_exp
+  tile_fk: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "collections_tiles"
+"""
+enum collections_tiles_constraint {
+  """unique or primary key constraint"""
+  collections_tiles_collection_fk_key
+
+  """unique or primary key constraint"""
+  collections_tiles_pkey
+
+  """unique or primary key constraint"""
+  collections_tiles_tile_fk_key
+}
+
+"""
+input type for incrementing numeric columns in table "collections_tiles"
+"""
+input collections_tiles_inc_input {
+  order: Int
+}
+
+"""
+input type for inserting data into table "collections_tiles"
+"""
+input collections_tiles_insert_input {
+  collection: collections_obj_rel_insert_input
+  collection_fk: uuid
+  created_at: timestamptz
+  id: uuid
+  order: Int
+  tile: tiles_obj_rel_insert_input
+  tile_fk: uuid
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "collections_tiles"
+"""
+type collections_tiles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [collections_tiles!]!
+}
+
+"""
+input type for inserting object relation for remote table "collections_tiles"
+"""
+input collections_tiles_obj_rel_insert_input {
+  data: collections_tiles_insert_input!
+
+  """on conflict condition"""
+  on_conflict: collections_tiles_on_conflict
+}
+
+"""
+on conflict condition type for table "collections_tiles"
+"""
+input collections_tiles_on_conflict {
+  constraint: collections_tiles_constraint!
+  update_columns: [collections_tiles_update_column!]! = []
+  where: collections_tiles_bool_exp
+}
+
+"""Ordering options when selecting data from "collections_tiles"."""
+input collections_tiles_order_by {
+  collection: collections_order_by
+  collection_fk: order_by
+  created_at: order_by
+  id: order_by
+  order: order_by
+  tile: tiles_order_by
+  tile_fk: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: collections_tiles"""
+input collections_tiles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "collections_tiles"
+"""
+enum collections_tiles_select_column {
+  """column name"""
+  collection_fk
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  order
+
+  """column name"""
+  tile_fk
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "collections_tiles"
+"""
+input collections_tiles_set_input {
+  collection_fk: uuid
+  created_at: timestamptz
+  id: uuid
+  order: Int
+  tile_fk: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "collections_tiles"
+"""
+enum collections_tiles_update_column {
+  """column name"""
+  collection_fk
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  order
+
+  """column name"""
+  tile_fk
+
+  """column name"""
+  updated_at
+}
+
+"""
+update columns of table "collections"
+"""
+enum collections_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+}
+
+scalar json
+
+"""
+Boolean expression to compare columns of type "json". All fields are combined with logical 'AND'.
+"""
+input json_comparison_exp {
+  _eq: json
+  _gt: json
+  _gte: json
+  _in: [json!]
+  _is_null: Boolean
+  _lt: json
+  _lte: json
+  _neq: json
+  _nin: [json!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "collections"
+  """
+  delete_collections(
+    """filter the rows which have to be deleted"""
+    where: collections_bool_exp!
+  ): collections_mutation_response
+
+  """
+  delete single row from the table: "collections"
+  """
+  delete_collections_by_pk(id: uuid!): collections
+
+  """
+  delete data from the table: "collections_tiles"
+  """
+  delete_collections_tiles(
+    """filter the rows which have to be deleted"""
+    where: collections_tiles_bool_exp!
+  ): collections_tiles_mutation_response
+
+  """
+  delete single row from the table: "collections_tiles"
+  """
+  delete_collections_tiles_by_pk(id: uuid!): collections_tiles
+
+  """
+  delete data from the table: "tiles"
+  """
+  delete_tiles(
+    """filter the rows which have to be deleted"""
+    where: tiles_bool_exp!
+  ): tiles_mutation_response
+
+  """
+  delete single row from the table: "tiles"
+  """
+  delete_tiles_by_pk(id: uuid!): tiles
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  delete single row from the table: "users"
+  """
+  delete_users_by_pk(id: uuid!): users
+
+  """
+  delete data from the table: "users_collections"
+  """
+  delete_users_collections(
+    """filter the rows which have to be deleted"""
+    where: users_collections_bool_exp!
+  ): users_collections_mutation_response
+
+  """
+  delete single row from the table: "users_collections"
+  """
+  delete_users_collections_by_pk(id: uuid!): users_collections
+
+  """
+  insert data into the table: "collections"
+  """
+  insert_collections(
+    """the rows to be inserted"""
+    objects: [collections_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: collections_on_conflict
+  ): collections_mutation_response
+
+  """
+  insert a single row into the table: "collections"
+  """
+  insert_collections_one(
+    """the row to be inserted"""
+    object: collections_insert_input!
+
+    """on conflict condition"""
+    on_conflict: collections_on_conflict
+  ): collections
+
+  """
+  insert data into the table: "collections_tiles"
+  """
+  insert_collections_tiles(
+    """the rows to be inserted"""
+    objects: [collections_tiles_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: collections_tiles_on_conflict
+  ): collections_tiles_mutation_response
+
+  """
+  insert a single row into the table: "collections_tiles"
+  """
+  insert_collections_tiles_one(
+    """the row to be inserted"""
+    object: collections_tiles_insert_input!
+
+    """on conflict condition"""
+    on_conflict: collections_tiles_on_conflict
+  ): collections_tiles
+
+  """
+  insert data into the table: "tiles"
+  """
+  insert_tiles(
+    """the rows to be inserted"""
+    objects: [tiles_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: tiles_on_conflict
+  ): tiles_mutation_response
+
+  """
+  insert a single row into the table: "tiles"
+  """
+  insert_tiles_one(
+    """the row to be inserted"""
+    object: tiles_insert_input!
+
+    """on conflict condition"""
+    on_conflict: tiles_on_conflict
+  ): tiles
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  insert data into the table: "users_collections"
+  """
+  insert_users_collections(
+    """the rows to be inserted"""
+    objects: [users_collections_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: users_collections_on_conflict
+  ): users_collections_mutation_response
+
+  """
+  insert a single row into the table: "users_collections"
+  """
+  insert_users_collections_one(
+    """the row to be inserted"""
+    object: users_collections_insert_input!
+
+    """on conflict condition"""
+    on_conflict: users_collections_on_conflict
+  ): users_collections
+
+  """
+  insert a single row into the table: "users"
+  """
+  insert_users_one(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users
+
+  """
+  update data of the table: "collections"
+  """
+  update_collections(
+    """sets the columns of the filtered rows to the given values"""
+    _set: collections_set_input
+
+    """filter the rows which have to be updated"""
+    where: collections_bool_exp!
+  ): collections_mutation_response
+
+  """
+  update single row of the table: "collections"
+  """
+  update_collections_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: collections_set_input
+    pk_columns: collections_pk_columns_input!
+  ): collections
+
+  """
+  update data of the table: "collections_tiles"
+  """
+  update_collections_tiles(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collections_tiles_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collections_tiles_set_input
+
+    """filter the rows which have to be updated"""
+    where: collections_tiles_bool_exp!
+  ): collections_tiles_mutation_response
+
+  """
+  update single row of the table: "collections_tiles"
+  """
+  update_collections_tiles_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: collections_tiles_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: collections_tiles_set_input
+    pk_columns: collections_tiles_pk_columns_input!
+  ): collections_tiles
+
+  """
+  update data of the table: "tiles"
+  """
+  update_tiles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: tiles_set_input
+
+    """filter the rows which have to be updated"""
+    where: tiles_bool_exp!
+  ): tiles_mutation_response
+
+  """
+  update single row of the table: "tiles"
+  """
+  update_tiles_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: tiles_set_input
+    pk_columns: tiles_pk_columns_input!
+  ): tiles
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  update single row of the table: "users"
+  """
+  update_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  """
+  update data of the table: "users_collections"
+  """
+  update_users_collections(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: users_collections_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_collections_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_collections_bool_exp!
+  ): users_collections_mutation_response
+
+  """
+  update single row of the table: "users_collections"
+  """
+  update_users_collections_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: users_collections_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_collections_set_input
+    pk_columns: users_collections_pk_columns_input!
+  ): users_collections
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "collections"
+  """
+  collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_order_by!]
+
+    """filter the rows returned"""
+    where: collections_bool_exp
+  ): collectionsConnection!
+
+  """
+  fetch data from the table: "collections_tiles"
+  """
+  collections_tiles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [collections_tiles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_tiles_order_by!]
+
+    """filter the rows returned"""
+    where: collections_tiles_bool_exp
+  ): collections_tilesConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+
+  """
+  fetch data from the table: "tiles"
+  """
+  tiles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [tiles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tiles_order_by!]
+
+    """filter the rows returned"""
+    where: tiles_bool_exp
+  ): tilesConnection!
+
+  """An array relationship connection"""
+  users_collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collectionsConnection!
+
+  """
+  fetch data from the table: "users"
+  """
+  users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): usersConnection!
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "collections"
+  """
+  collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_order_by!]
+
+    """filter the rows returned"""
+    where: collections_bool_exp
+  ): collectionsConnection!
+
+  """
+  fetch data from the table: "collections_tiles"
+  """
+  collections_tiles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [collections_tiles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_tiles_order_by!]
+
+    """filter the rows returned"""
+    where: collections_tiles_bool_exp
+  ): collections_tilesConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+
+  """
+  fetch data from the table: "tiles"
+  """
+  tiles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [tiles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tiles_order_by!]
+
+    """filter the rows returned"""
+    where: tiles_bool_exp
+  ): tilesConnection!
+
+  """An array relationship connection"""
+  users_collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collectionsConnection!
+
+  """
+  fetch data from the table: "users"
+  """
+  users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): usersConnection!
+}
+
+"""
+columns and relationships of "tiles"
+"""
+type tiles implements Node {
+  """An object relationship"""
+  collections_tile: collections_tiles
+  content(
+    """JSON select path"""
+    path: String
+  ): json!
+  created_at: timestamptz!
+  id: ID!
+  type: String!
+  updated_at: timestamptz!
+}
+
+"""
+A Relay connection object on "tiles"
+"""
+type tilesConnection {
+  edges: [tilesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type tilesEdge {
+  cursor: String!
+  node: tiles!
+}
+
+"""
+Boolean expression to filter rows from the table "tiles". All fields are combined with a logical 'AND'.
+"""
+input tiles_bool_exp {
+  _and: [tiles_bool_exp!]
+  _not: tiles_bool_exp
+  _or: [tiles_bool_exp!]
+  collections_tile: collections_tiles_bool_exp
+  content: json_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  type: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "tiles"
+"""
+enum tiles_constraint {
+  """unique or primary key constraint"""
+  tiles_pkey
+}
+
+"""
+input type for inserting data into table "tiles"
+"""
+input tiles_insert_input {
+  collections_tile: collections_tiles_obj_rel_insert_input
+  content: json
+  created_at: timestamptz
+  id: uuid
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "tiles"
+"""
+type tiles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [tiles!]!
+}
+
+"""
+input type for inserting object relation for remote table "tiles"
+"""
+input tiles_obj_rel_insert_input {
+  data: tiles_insert_input!
+
+  """on conflict condition"""
+  on_conflict: tiles_on_conflict
+}
+
+"""
+on conflict condition type for table "tiles"
+"""
+input tiles_on_conflict {
+  constraint: tiles_constraint!
+  update_columns: [tiles_update_column!]! = []
+  where: tiles_bool_exp
+}
+
+"""Ordering options when selecting data from "tiles"."""
+input tiles_order_by {
+  collections_tile: collections_tiles_order_by
+  content: order_by
+  created_at: order_by
+  id: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: tiles"""
+input tiles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "tiles"
+"""
+enum tiles_select_column {
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "tiles"
+"""
+input tiles_set_input {
+  content: json
+  created_at: timestamptz
+  id: uuid
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "tiles"
+"""
+enum tiles_update_column {
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "users"
+"""
+type users implements Node {
+  created_at: timestamptz!
+  id: ID!
+  mail: String!
+  name: String
+  updated_at: timestamptz!
+
+  """An array relationship"""
+  users_collections(
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): [users_collections!]!
+
+  """An aggregate relationship"""
+  users_collections_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collections_aggregate!
+
+  """An array relationship connection"""
+  users_collections_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [users_collections_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_collections_order_by!]
+
+    """filter the rows returned"""
+    where: users_collections_bool_exp
+  ): users_collectionsConnection!
+}
+
+"""
+A Relay connection object on "users"
+"""
+type usersConnection {
+  edges: [usersEdge!]!
+  pageInfo: PageInfo!
+}
+
+type usersEdge {
+  cursor: String!
+  node: users!
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp!]
+  _not: users_bool_exp
+  _or: [users_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  mail: String_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  users_collections: users_collections_bool_exp
+}
+
+"""
+columns and relationships of "users_collections"
+"""
+type users_collections implements Node {
+  """An object relationship"""
+  collection: collections!
+  collection_fk: uuid!
+  id: ID!
+  is_pinned: Boolean!
+  order: Int!
+
+  """An object relationship"""
+  user: users!
+  user_fk: uuid!
+}
+
+"""
+A Relay connection object on "users_collections"
+"""
+type users_collectionsConnection {
+  edges: [users_collectionsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type users_collectionsEdge {
+  cursor: String!
+  node: users_collections!
+}
+
+"""
+aggregated selection of "users_collections"
+"""
+type users_collections_aggregate {
+  aggregate: users_collections_aggregate_fields
+  nodes: [users_collections!]!
+}
+
+"""
+aggregate fields of "users_collections"
+"""
+type users_collections_aggregate_fields {
+  avg: users_collections_avg_fields
+  count(columns: [users_collections_select_column!], distinct: Boolean): Int!
+  max: users_collections_max_fields
+  min: users_collections_min_fields
+  stddev: users_collections_stddev_fields
+  stddev_pop: users_collections_stddev_pop_fields
+  stddev_samp: users_collections_stddev_samp_fields
+  sum: users_collections_sum_fields
+  var_pop: users_collections_var_pop_fields
+  var_samp: users_collections_var_samp_fields
+  variance: users_collections_variance_fields
+}
+
+"""
+order by aggregate values of table "users_collections"
+"""
+input users_collections_aggregate_order_by {
+  avg: users_collections_avg_order_by
+  count: order_by
+  max: users_collections_max_order_by
+  min: users_collections_min_order_by
+  stddev: users_collections_stddev_order_by
+  stddev_pop: users_collections_stddev_pop_order_by
+  stddev_samp: users_collections_stddev_samp_order_by
+  sum: users_collections_sum_order_by
+  var_pop: users_collections_var_pop_order_by
+  var_samp: users_collections_var_samp_order_by
+  variance: users_collections_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "users_collections"
+"""
+input users_collections_arr_rel_insert_input {
+  data: [users_collections_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: users_collections_on_conflict
+}
+
+"""aggregate avg on columns"""
+type users_collections_avg_fields {
+  order: Float
+}
+
+"""
+order by avg() on columns of table "users_collections"
+"""
+input users_collections_avg_order_by {
+  order: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "users_collections". All fields are combined with a logical 'AND'.
+"""
+input users_collections_bool_exp {
+  _and: [users_collections_bool_exp!]
+  _not: users_collections_bool_exp
+  _or: [users_collections_bool_exp!]
+  collection: collections_bool_exp
+  collection_fk: uuid_comparison_exp
+  id: uuid_comparison_exp
+  is_pinned: Boolean_comparison_exp
+  order: Int_comparison_exp
+  user: users_bool_exp
+  user_fk: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "users_collections"
+"""
+enum users_collections_constraint {
+  """unique or primary key constraint"""
+  users_collection_pkey
+
+  """unique or primary key constraint"""
+  users_collections_collection_fk_key
+}
+
+"""
+input type for incrementing numeric columns in table "users_collections"
+"""
+input users_collections_inc_input {
+  order: Int
+}
+
+"""
+input type for inserting data into table "users_collections"
+"""
+input users_collections_insert_input {
+  collection: collections_obj_rel_insert_input
+  collection_fk: uuid
+  id: uuid
+  is_pinned: Boolean
+  order: Int
+  user: users_obj_rel_insert_input
+  user_fk: uuid
+}
+
+"""aggregate max on columns"""
+type users_collections_max_fields {
+  collection_fk: uuid
+  id: uuid
+  order: Int
+  user_fk: uuid
+}
+
+"""
+order by max() on columns of table "users_collections"
+"""
+input users_collections_max_order_by {
+  collection_fk: order_by
+  id: order_by
+  order: order_by
+  user_fk: order_by
+}
+
+"""aggregate min on columns"""
+type users_collections_min_fields {
+  collection_fk: uuid
+  id: uuid
+  order: Int
+  user_fk: uuid
+}
+
+"""
+order by min() on columns of table "users_collections"
+"""
+input users_collections_min_order_by {
+  collection_fk: order_by
+  id: order_by
+  order: order_by
+  user_fk: order_by
+}
+
+"""
+response of any mutation on the table "users_collections"
+"""
+type users_collections_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [users_collections!]!
+}
+
+"""
+on conflict condition type for table "users_collections"
+"""
+input users_collections_on_conflict {
+  constraint: users_collections_constraint!
+  update_columns: [users_collections_update_column!]! = []
+  where: users_collections_bool_exp
+}
+
+"""Ordering options when selecting data from "users_collections"."""
+input users_collections_order_by {
+  collection: collections_order_by
+  collection_fk: order_by
+  id: order_by
+  is_pinned: order_by
+  order: order_by
+  user: users_order_by
+  user_fk: order_by
+}
+
+"""primary key columns input for table: users_collections"""
+input users_collections_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "users_collections"
+"""
+enum users_collections_select_column {
+  """column name"""
+  collection_fk
+
+  """column name"""
+  id
+
+  """column name"""
+  is_pinned
+
+  """column name"""
+  order
+
+  """column name"""
+  user_fk
+}
+
+"""
+input type for updating data in table "users_collections"
+"""
+input users_collections_set_input {
+  collection_fk: uuid
+  id: uuid
+  is_pinned: Boolean
+  order: Int
+  user_fk: uuid
+}
+
+"""aggregate stddev on columns"""
+type users_collections_stddev_fields {
+  order: Float
+}
+
+"""
+order by stddev() on columns of table "users_collections"
+"""
+input users_collections_stddev_order_by {
+  order: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type users_collections_stddev_pop_fields {
+  order: Float
+}
+
+"""
+order by stddev_pop() on columns of table "users_collections"
+"""
+input users_collections_stddev_pop_order_by {
+  order: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type users_collections_stddev_samp_fields {
+  order: Float
+}
+
+"""
+order by stddev_samp() on columns of table "users_collections"
+"""
+input users_collections_stddev_samp_order_by {
+  order: order_by
+}
+
+"""aggregate sum on columns"""
+type users_collections_sum_fields {
+  order: Int
+}
+
+"""
+order by sum() on columns of table "users_collections"
+"""
+input users_collections_sum_order_by {
+  order: order_by
+}
+
+"""
+update columns of table "users_collections"
+"""
+enum users_collections_update_column {
+  """column name"""
+  collection_fk
+
+  """column name"""
+  id
+
+  """column name"""
+  is_pinned
+
+  """column name"""
+  order
+
+  """column name"""
+  user_fk
+}
+
+"""aggregate var_pop on columns"""
+type users_collections_var_pop_fields {
+  order: Float
+}
+
+"""
+order by var_pop() on columns of table "users_collections"
+"""
+input users_collections_var_pop_order_by {
+  order: order_by
+}
+
+"""aggregate var_samp on columns"""
+type users_collections_var_samp_fields {
+  order: Float
+}
+
+"""
+order by var_samp() on columns of table "users_collections"
+"""
+input users_collections_var_samp_order_by {
+  order: order_by
+}
+
+"""aggregate variance on columns"""
+type users_collections_variance_fields {
+  order: Float
+}
+
+"""
+order by variance() on columns of table "users_collections"
+"""
+input users_collections_variance_order_by {
+  order: order_by
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """unique or primary key constraint"""
+  users_mail_key
+
+  """unique or primary key constraint"""
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  created_at: timestamptz
+  id: uuid
+  mail: String
+  name: String
+  updated_at: timestamptz
+  users_collections: users_collections_arr_rel_insert_input
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+
+  """on conflict condition"""
+  on_conflict: users_on_conflict
+}
+
+"""
+on conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]! = []
+  where: users_bool_exp
+}
+
+"""Ordering options when selecting data from "users"."""
+input users_order_by {
+  created_at: order_by
+  id: order_by
+  mail: order_by
+  name: order_by
+  updated_at: order_by
+  users_collections_aggregate: users_collections_aggregate_order_by
+}
+
+"""primary key columns input for table: users"""
+input users_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  mail
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  created_at: timestamptz
+  id: uuid
+  mail: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  mail
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
