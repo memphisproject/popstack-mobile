@@ -45,8 +45,9 @@ const Home: React.FC = () => {
     { id: 'd4e63b30-144c-44df-9fa7-0034bc5a735b' },
   );
   const navigation = useNavigation();
+  const collectionsList = data.users_connection.edges[0].node.users_collections;
   const collectionsSize =
-    data.users_connection.edges[0]?.node.users_collections.length;
+    data.users_connection.edges[0].node.users_collections.length;
 
   return (
     <Container>
@@ -60,7 +61,7 @@ const Home: React.FC = () => {
         </Header>
 
         <FavouritesWrapper>
-          {data.users_connection.edges[0]?.node.users_collections
+          {collectionsList
             .filter(collection => collection.is_pinned)
             .map(collection => (
               <FavouriteCollection
@@ -75,9 +76,7 @@ const Home: React.FC = () => {
 
         <CollectionListWrapper>
           <CollectionList
-            data={data.users_connection.edges[0]?.node.users_collections.filter(
-              collection => !collection.is_pinned,
-            )}
+            data={collectionsList.filter(collection => !collection.is_pinned)}
             keyExtractor={item => item.collection.id}
             renderItem={({ item }) => (
               <CollectionListItem collection={item.collection} />

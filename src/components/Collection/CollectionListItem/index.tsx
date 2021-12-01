@@ -15,6 +15,7 @@ import {
   LastUpdated,
   LogoWrapper,
   Logo,
+  LogoText,
 } from './styles';
 
 type CollectionListItemProps = {
@@ -29,6 +30,7 @@ const CollectionListItem: React.FC<CollectionListItemProps> = ({
       fragment CollectionListItem_collections on collections {
         title
         updated_at
+        image
       }
     `,
     collection,
@@ -42,8 +44,16 @@ const CollectionListItem: React.FC<CollectionListItemProps> = ({
           updated by {format(new Date(data?.updated_at), 'd.M.uu')}
         </LastUpdated>
       </TitleWrapper>
-      <LogoWrapper>
-        <Logo>:</Logo>
+      <LogoWrapper hasImage={!!data.image}>
+        {data?.image ? (
+          <Logo
+            source={{
+              uri: data.image,
+            }}
+          />
+        ) : (
+          <LogoText>{data.title.toUpperCase().substring(0, 2)}</LogoText>
+        )}
       </LogoWrapper>
     </Container>
   );
