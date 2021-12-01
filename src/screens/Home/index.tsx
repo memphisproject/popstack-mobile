@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
 import FavouriteCollection from '../../components/Collection/FavouriteCollection';
 import CollectionListItem from '../../components/Collection/CollectionListItem';
-import type { Collection } from '../../utils/models';
-import api from '../../services/apiClient';
+import type {
+  HomeQuery,
+  HomeQueryResponse,
+} from '../../__generated__/HomeQuery.graphql';
 
 import {
   Container,
@@ -18,52 +21,70 @@ import {
   CollectionList,
 } from './styles';
 
-const fetchCollections = async (): Promise<Collection[]> => {
-  const response = await api.get('/collection');
-
-  return response.data;
-};
-
 const Home: React.FC = () => {
-  const [collectionList, setCollectionList] = useState<Collection[]>([]);
+  const data: HomeQueryResponse = useLazyLoadQuery<HomeQuery>(
+    graphql`
+      query HomeQuery($id: uuid!) {
+        users_connection(where: { id: { _eq: $id } }) {
+          edges {
+            node {
+              users_collections(order_by: { order: asc }) {
+                is_pinned
+                collection {
+                  id
+                  ...CollectionListItem_collections
+                  ...FavouriteCollection_collections
+                }
+              }
+              name
+            }
+          }
+        }
+      }
+    `,
+    { id: 'd4e63b30-144c-44df-9fa7-0034bc5a735b' },
+  );
   const navigation = useNavigation();
-
-  useEffect(() => {
-    (async () => {
-      const fetchedCollectionList = await fetchCollections();
-      setCollectionList(fetchedCollectionList);
-    })();
-  }, [setCollectionList]);
+  const collectionsSize =
+    data.users_connection.edges[0]?.node.users_collections.length;
 
   return (
     <Container>
-      <Header>
-        <TitleWrapper>
-          <Title>Collections</Title>
-          <Subtitle>Total 10 collections</Subtitle>
-        </TitleWrapper>
-        <InvisibleButton>+ New Collection</InvisibleButton>
-      </Header>
+      <Suspense fallback={<Title>Loading</Title>}>
+        <Header>
+          <TitleWrapper>
+            <Title>Collections</Title>
+            <Subtitle>Total {collectionsSize} collections</Subtitle>
+          </TitleWrapper>
+          <InvisibleButton>+ New Collection</InvisibleButton>
+        </Header>
 
-      <FavouritesWrapper>
-        {collectionList &&
-          collectionList.map(collection => (
-            <FavouriteCollection
-              key={collection.id}
-              onPress={() => {
-                navigation.navigate('Collection' as never);
-              }}
-            />
-          ))}
-      </FavouritesWrapper>
+        <FavouritesWrapper>
+          {data.users_connection.edges[0]?.node.users_collections
+            .filter(collection => collection.is_pinned)
+            .map(collection => (
+              <FavouriteCollection
+                key={collection.collection.id}
+                collection={collection.collection}
+                onPress={() => {
+                  navigation.navigate('Collection' as never);
+                }}
+              />
+            ))}
+        </FavouritesWrapper>
 
-      <CollectionListWrapper>
-        <CollectionList
-          data={collectionList}
-          keyExtractor={(item: Collection) => item.id}
-          renderItem={({ item: Collection }) => <CollectionListItem />}
-        />
-      </CollectionListWrapper>
+        <CollectionListWrapper>
+          <CollectionList
+            data={data.users_connection.edges[0]?.node.users_collections.filter(
+              collection => !collection.is_pinned,
+            )}
+            keyExtractor={item => item.collection.id}
+            renderItem={({ item }) => (
+              <CollectionListItem collection={item.collection} />
+            )}
+          />
+        </CollectionListWrapper>
+      </Suspense>
     </Container>
   );
 };

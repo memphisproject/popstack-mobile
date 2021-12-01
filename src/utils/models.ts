@@ -21,3 +21,14 @@ export interface Comments {
   parent: string;
   content: string;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  content: {
+    id: string;
+    order: number;
+    pinned: string;
+  }[];
+}

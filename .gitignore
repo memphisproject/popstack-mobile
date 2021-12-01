@@ -53,3 +53,6 @@ buck-out/
 .expo/
 web-build/
 dist/
+
+#Relay
+src/__generated__

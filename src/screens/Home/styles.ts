@@ -6,8 +6,6 @@ import {
 } from 'react-native-iphone-x-helper';
 import { FlatList } from 'react-native';
 
-import type { Collection } from '../../utils/models';
-
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
@@ -64,9 +62,7 @@ export const CollectionListWrapper = styled.View`
   margin-top: ${RFValue(14)}px;
 `;
 
-export const CollectionList = styled(
-  FlatList as new () => FlatList<Collection>,
-).attrs({
+export const CollectionList = styled(FlatList as new () => FlatList).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingBottom: getBottomSpace(),
