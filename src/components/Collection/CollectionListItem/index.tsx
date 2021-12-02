@@ -19,10 +19,12 @@ import {
 } from './styles';
 
 type CollectionListItemProps = {
+  onPress: () => void;
   collection: CollectionListItem_collections$key;
 };
 
 const CollectionListItem: React.FC<CollectionListItemProps> = ({
+  onPress,
   collection,
 }: CollectionListItemProps) => {
   const data: CollectionListItem_collections = useFragment(
@@ -37,7 +39,7 @@ const CollectionListItem: React.FC<CollectionListItemProps> = ({
   );
 
   return (
-    <Container>
+    <Container onPress={onPress}>
       <TitleWrapper>
         <Title>{data?.title}</Title>
         <LastUpdated>

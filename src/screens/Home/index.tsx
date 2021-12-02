@@ -34,9 +34,9 @@ const Home: React.FC = () => {
                   id
                   ...CollectionListItem_collections
                   ...FavouriteCollection_collections
+                  ...Collection_collections
                 }
               }
-              name
             }
           }
         }
@@ -48,6 +48,10 @@ const Home: React.FC = () => {
   const collectionsList = data.users_connection.edges[0].node.users_collections;
   const collectionsSize =
     data.users_connection.edges[0].node.users_collections.length;
+
+  const handleCollectionNavigation = collection => {
+    navigation.navigate('Collection', { collection });
+  };
 
   return (
     <Container>
@@ -63,13 +67,11 @@ const Home: React.FC = () => {
         <FavouritesWrapper>
           {collectionsList
             .filter(collection => collection.is_pinned)
-            .map(collection => (
+            .map(item => (
               <FavouriteCollection
-                key={collection.collection.id}
-                collection={collection.collection}
-                onPress={() => {
-                  navigation.navigate('Collection' as never);
-                }}
+                key={item.collection.id}
+                collection={item.collection}
+                onPress={() => handleCollectionNavigation(item.collection)}
               />
             ))}
         </FavouritesWrapper>
@@ -79,7 +81,10 @@ const Home: React.FC = () => {
             data={collectionsList.filter(collection => !collection.is_pinned)}
             keyExtractor={item => item.collection.id}
             renderItem={({ item }) => (
-              <CollectionListItem collection={item.collection} />
+              <CollectionListItem
+                collection={item.collection}
+                onPress={() => handleCollectionNavigation(item.collection)}
+              />
             )}
           />
         </CollectionListWrapper>

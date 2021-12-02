@@ -5,7 +5,7 @@ interface logoWrapperProps {
   hasImage: boolean;
 }
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 15px;
   padding: 17px 24px;

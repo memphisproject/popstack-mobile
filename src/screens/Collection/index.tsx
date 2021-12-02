@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { useFragment } from 'react-relay';
+import { graphql } from 'react-relay/hooks';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
 import TileDetails from '../../modals/TileDetails';
+import type { Collection_collections$key } from '../../__generated__/Collection_collections.graphql';
 
 import {
   Container,
@@ -20,7 +24,19 @@ import {
 } from './styles';
 
 const Collection: React.FC = () => {
+  const route = useRoute();
+  const { collection } = route.params;
   const [tileDetailsModalOpen, setTileDetailsModalOpen] = useState(false);
+
+  const collectionData = useFragment(
+    graphql`
+      fragment Collection_collections on collections {
+        id
+        title
+      }
+    `,
+    collection,
+  );
 
   const handleTileDetailsModalClose = () => {
     setTileDetailsModalOpen(false);
@@ -34,7 +50,7 @@ const Collection: React.FC = () => {
     <Container>
       <Header>
         <TitleWrapper>
-          <Title>My personal Instagram about psychology</Title>
+          <Title>{collectionData?.title}</Title>
         </TitleWrapper>
 
         <Icon name="info" />
