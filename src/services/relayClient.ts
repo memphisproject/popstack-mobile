@@ -2,7 +2,7 @@ import type { FetchFunction } from 'relay-runtime';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 
 const fetchQuery: FetchFunction = async (params, variables, _cacheConfig) => {
-  const response = await fetch('http://localhost:8080/v1beta1/relay', {
+  const response = await fetch('http://192.168.188.20:8080/v1beta1/relay', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
