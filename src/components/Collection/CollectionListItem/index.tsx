@@ -27,16 +27,17 @@ const CollectionListItem: React.FC<CollectionListItemProps> = ({
   onPress,
   collection,
 }: CollectionListItemProps) => {
-  const data: CollectionListItem_collections = useFragment(
-    graphql`
-      fragment CollectionListItem_collections on collections {
-        title
-        updated_at
-        image
-      }
-    `,
-    collection,
-  );
+  const data: CollectionListItem_collections =
+    useFragment<CollectionListItem_collections>(
+      graphql`
+        fragment CollectionListItem_collections on collections {
+          title
+          updated_at
+          image
+        }
+      `,
+      collection,
+    );
 
   return (
     <Container onPress={onPress}>

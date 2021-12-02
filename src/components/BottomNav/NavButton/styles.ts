@@ -4,5 +4,5 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.TouchableWithoutFeedback``;
 export const Icon = styled(Feather)`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(24)}px;
 `;

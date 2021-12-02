@@ -24,13 +24,13 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, ...rest }) => {
       <NavBar {...rest}>
         <NavButtonsWrapper>
           <NavButton
-            icon="copy"
+            icon="grid"
             onPress={() => {
               navigation.navigate('Home');
             }}
           />
           <NavButton
-            icon="activity"
+            icon="book-open"
             onPress={() => {
               navigation.navigate('Home');
             }}
@@ -42,13 +42,13 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, ...rest }) => {
           />
 
           <NavButton
-            icon="message-circle"
+            icon="user"
             onPress={() => {
               navigation.navigate('Home');
             }}
           />
           <NavButton
-            icon="user"
+            icon="bell"
             onPress={() => {
               navigation.navigate('Home');
             }}

@@ -30,15 +30,15 @@ const App: React.FC = () => {
 
   return (
     <RelayEnvironmentProvider environment={relayClient}>
-      <Suspense fallback={<Text>loading app...</Text>}>
-        <ThemeProvider theme={theme}>
-          <AppProvider>
-            <NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <AppProvider>
+          <NavigationContainer>
+            <Suspense fallback={<Text>loading App...</Text>}>
               <AppRoutes />
-            </NavigationContainer>
-          </AppProvider>
-        </ThemeProvider>
-      </Suspense>
+            </Suspense>
+          </NavigationContainer>
+        </AppProvider>
+      </ThemeProvider>
     </RelayEnvironmentProvider>
   );
 };

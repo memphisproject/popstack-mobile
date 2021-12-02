@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useFragment } from 'react-relay';
@@ -12,7 +12,6 @@ import type {
   CollectionQuery,
   CollectionQueryResponse,
 } from '../../__generated__/CollectionQuery.graphql';
-import CollectionListItem from '../../components/Collection/CollectionListItem';
 
 import {
   Container,
@@ -44,7 +43,7 @@ const Collection: React.FC = () => {
     collection,
   );
 
-  const relayID = base64.decode(collectionData.id).substring(30, 66);
+  const relayIdDecoded = base64.decode(collectionData.id).substring(30, 66);
 
   const tilesData: CollectionQueryResponse = useLazyLoadQuery<CollectionQuery>(
     graphql`
@@ -65,7 +64,7 @@ const Collection: React.FC = () => {
         }
       }
     `,
-    { id: relayID },
+    { id: relayIdDecoded },
   );
 
   const tilesList = tilesData.collections_tiles_connection.edges;
@@ -82,7 +81,9 @@ const Collection: React.FC = () => {
     <Container>
       <Header>
         <TitleWrapper>
-          <Title>{collectionData?.title}</Title>
+          <Suspense fallback={<Title>Loading</Title>}>
+            <Title>{collectionData?.title}</Title>
+          </Suspense>
         </TitleWrapper>
 
         <Icon name="info" />

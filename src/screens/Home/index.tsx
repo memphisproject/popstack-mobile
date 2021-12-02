@@ -45,9 +45,10 @@ const Home: React.FC = () => {
     { id: 'd4e63b30-144c-44df-9fa7-0034bc5a735b' },
   );
   const navigation = useNavigation();
-  const collectionsList = data.users_connection.edges[0].node.users_collections;
+  const collectionsList =
+    data.users_connection.edges[0]?.node.users_collections;
   const collectionsSize =
-    data.users_connection.edges[0].node.users_collections.length;
+    data.users_connection.edges[0]?.node.users_collections.length;
 
   const handleCollectionNavigation = collection => {
     navigation.navigate('Collection', { collection });
@@ -55,19 +56,17 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <Suspense fallback={<Title>Loading</Title>}>
-        <Header>
-          <TitleWrapper>
-            <Title>Collections</Title>
-            <Subtitle>Total {collectionsSize} collections</Subtitle>
-          </TitleWrapper>
-          <InvisibleButton>+ New Collection</InvisibleButton>
-        </Header>
-      </Suspense>
+      <Header>
+        <TitleWrapper>
+          <Title>Collections</Title>
+          <Subtitle>Total {collectionsSize} collections</Subtitle>
+        </TitleWrapper>
+        <InvisibleButton>+ New Collection</InvisibleButton>
+      </Header>
 
-      <Suspense fallback={<Title>Loading</Title>}>
-        <FavouritesWrapper>
-          {collectionsList
+      <FavouritesWrapper>
+        {collectionsList &&
+          collectionsList
             .filter(collection => collection.is_pinned)
             .map(item => (
               <FavouriteCollection
@@ -76,23 +75,23 @@ const Home: React.FC = () => {
                 onPress={() => handleCollectionNavigation(item.collection)}
               />
             ))}
-        </FavouritesWrapper>
-      </Suspense>
+      </FavouritesWrapper>
 
-      <Suspense fallback={<Title>Loading</Title>}>
-        <CollectionListWrapper>
-          <CollectionList
-            data={collectionsList.filter(collection => !collection.is_pinned)}
-            keyExtractor={item => item.collection.id}
-            renderItem={({ item }) => (
-              <CollectionListItem
-                collection={item.collection}
-                onPress={() => handleCollectionNavigation(item.collection)}
-              />
-            )}
-          />
-        </CollectionListWrapper>
-      </Suspense>
+      <CollectionListWrapper>
+        <CollectionList
+          data={
+            collectionsList &&
+            collectionsList.filter(collection => !collection.is_pinned)
+          }
+          keyExtractor={item => item.collection.id}
+          renderItem={({ item }) => (
+            <CollectionListItem
+              collection={item.collection}
+              onPress={() => handleCollectionNavigation(item.collection)}
+            />
+          )}
+        />
+      </CollectionListWrapper>
     </Container>
   );
 };
