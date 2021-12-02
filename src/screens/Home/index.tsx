@@ -63,7 +63,9 @@ const Home: React.FC = () => {
           </TitleWrapper>
           <InvisibleButton>+ New Collection</InvisibleButton>
         </Header>
+      </Suspense>
 
+      <Suspense fallback={<Title>Loading</Title>}>
         <FavouritesWrapper>
           {collectionsList
             .filter(collection => collection.is_pinned)
@@ -75,7 +77,9 @@ const Home: React.FC = () => {
               />
             ))}
         </FavouritesWrapper>
+      </Suspense>
 
+      <Suspense fallback={<Title>Loading</Title>}>
         <CollectionListWrapper>
           <CollectionList
             data={collectionsList.filter(collection => !collection.is_pinned)}

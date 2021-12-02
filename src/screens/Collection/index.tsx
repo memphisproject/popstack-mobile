@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useFragment } from 'react-relay';
-import { graphql } from 'react-relay/hooks';
+import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
+import base64 from 'react-native-base64';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
 import TileDetails from '../../modals/TileDetails';
-import type { Collection_collections$key } from '../../__generated__/Collection_collections.graphql';
+import type {
+  CollectionQuery,
+  CollectionQueryResponse,
+} from '../../__generated__/CollectionQuery.graphql';
+import CollectionListItem from '../../components/Collection/CollectionListItem';
 
 import {
   Container,
@@ -21,6 +26,7 @@ import {
   SocialMetricLabel,
   SocialMetricIcon,
   TilesListWrapper,
+  TilesList,
 } from './styles';
 
 const Collection: React.FC = () => {
@@ -37,6 +43,32 @@ const Collection: React.FC = () => {
     `,
     collection,
   );
+
+  const relayID = base64.decode(collectionData.id).substring(30, 66);
+
+  const tilesData: CollectionQueryResponse = useLazyLoadQuery<CollectionQuery>(
+    graphql`
+      query CollectionQuery($id: uuid!) {
+        collections_tiles_connection(
+          where: { collection_fk: { _eq: $id } }
+          order_by: { order: asc }
+        ) {
+          edges {
+            node {
+              tile {
+                id
+                type
+                ...TextTile_tiles
+              }
+            }
+          }
+        }
+      }
+    `,
+    { id: relayID },
+  );
+
+  const tilesList = tilesData.collections_tiles_connection.edges;
 
   const handleTileDetailsModalClose = () => {
     setTileDetailsModalOpen(false);
@@ -78,7 +110,16 @@ const Collection: React.FC = () => {
       </SocialMetricsBar>
 
       <TilesListWrapper>
-        <TextTile onPress={handleTileDetailsModalOpen} />
+        <TilesList
+          data={tilesList}
+          keyExtractor={item => item.node.tile.id}
+          renderItem={({ item }) => (
+            <TextTile
+              onPress={handleTileDetailsModalOpen}
+              tile={item.node.tile}
+            />
+          )}
+        />
       </TilesListWrapper>
 
       <Modal visible={tileDetailsModalOpen}>

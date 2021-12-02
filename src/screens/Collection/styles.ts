@@ -1,7 +1,11 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-x-helper';
 import { Feather } from '@expo/vector-icons';
+import { FlatList } from 'react-native';
 
 export const Container = styled.View`
   flex: 1;
@@ -78,3 +82,10 @@ export const TilesListWrapper = styled.View`
   margin-top: ${RFValue(10)}px;
   padding: 0 24px;
 `;
+
+export const TilesList = styled(FlatList as new () => FlatList).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getBottomSpace(),
+  },
+})``;
