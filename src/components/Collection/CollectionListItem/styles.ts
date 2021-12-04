@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+interface logoWrapperProps {
+  hasImage: boolean;
+}
+
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 15px;
@@ -25,13 +29,18 @@ export const LastUpdated = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
-export const LogoWrapper = styled.View`
+export const LogoWrapper = styled.View<logoWrapperProps>`
   background-color: ${({ theme }) => theme.colors.accent_light1};
-
-  padding: 10px 20px;
+  padding: ${({ hasImage }) => (!hasImage ? RFValue(10) : 0)}px;
   border-radius: 10px;
 `;
-export const Logo = styled.Text`
+export const Logo = styled.Image`
+  height: ${RFValue(40)}px;
+  width: ${RFValue(40)}px;
+  border-radius: 5px;
+`;
+
+export const LogoText = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
 `;

@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
+import type { PreloadedQuery } from 'react-relay';
+import { usePaginationFragment, usePreloadedQuery } from 'react-relay';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
 import TileDetails from '../../modals/TileDetails';
+import type { CollectionsQuery } from '../../__generated__/CollectionsQuery.graphql';
+import {
+  collectionsFragment,
+  collectionsQuery,
+} from '../../relay/queries/Collections';
+import type { CollectionsPaginationQuery } from '../../__generated__/CollectionsPaginationQuery.graphql';
+import type { CollectionsFrag_collections$key } from '../../__generated__/CollectionsFrag_collections.graphql';
 
 import {
   Container,

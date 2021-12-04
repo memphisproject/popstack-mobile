@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
 import {
   useFonts,
@@ -13,6 +13,8 @@ import theme from './src/global/styles/theme';
 // import darkTheme from './src/global/styles/dark-theme';
 import AppProvider from './src/hooks';
 import AppRoutes from './src/routes/app.routes';
+import { createRelayEnvironment } from './src/relay';
+import { ResettableRelayProvider } from './src/relay/providers/ResettableRelayProvider';
 
 const App: React.FC = () => {
   const [fontLoaded] = useFonts({
@@ -28,9 +30,15 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppProvider>
-        <NavigationContainer>
-          <AppRoutes />
-        </NavigationContainer>
+        <ResettableRelayProvider
+          createRelayEnvironment={createRelayEnvironment}
+        >
+          <NavigationContainer>
+            <Suspense fallback={<AppLoading />}>
+              <AppRoutes />
+            </Suspense>
+          </NavigationContainer>
+        </ResettableRelayProvider>
       </AppProvider>
     </ThemeProvider>
   );

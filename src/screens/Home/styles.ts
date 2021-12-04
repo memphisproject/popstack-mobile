@@ -6,7 +6,7 @@ import {
 } from 'react-native-iphone-x-helper';
 import { FlatList } from 'react-native';
 
-import type { Collection } from '../../utils/models';
+import type { Users_CollectionsEdge } from '../../types/graphql';
 
 export const Container = styled.View`
   flex: 1;
@@ -65,7 +65,7 @@ export const CollectionListWrapper = styled.View`
 `;
 
 export const CollectionList = styled(
-  FlatList as new () => FlatList<Collection>,
+  FlatList as new () => FlatList<Users_CollectionsEdge>,
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
