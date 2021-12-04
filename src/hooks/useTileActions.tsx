@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useRelayEnvironment } from 'react-relay';
+
+import { commitCreateTile } from '../relay/mutation/createTile';
 
 type TileType = 'textTile' | 'linkTile';
 
 interface TileActionsContextData {
   createTile: (type: TileType) => void;
   openCreateTextTileModal: boolean;
-  saveTextTile: () => void;
+  saveTextTile: (collectionRelayId: string) => void;
 }
 
 const TileActionsContext = createContext<TileActionsContextData>(
@@ -13,6 +16,7 @@ const TileActionsContext = createContext<TileActionsContextData>(
 );
 
 export const TileActionsProvider: React.FC = ({ children }) => {
+  const environment = useRelayEnvironment();
   const [openCreateTextTileModal, setOpenCreateTextTileModal] =
     useState<boolean>(false);
 
@@ -22,7 +26,8 @@ export const TileActionsProvider: React.FC = ({ children }) => {
     }
   };
 
-  const handleSaveTextTile = () => {
+  const handleSaveTextTile = (collectionRelayId: string) => {
+    commitCreateTile(environment, collectionRelayId);
     setOpenCreateTextTileModal(false);
   };
 

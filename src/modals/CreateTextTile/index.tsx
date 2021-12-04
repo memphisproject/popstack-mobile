@@ -8,15 +8,17 @@ import { CloseModalWrapper, Container, EditorContainer } from './styles';
 
 interface CreateTextTileProps {
   closeCreateTextTile: () => void;
+  collectionRelayId: string;
 }
 
 const CreateTextTile: React.FC<CreateTextTileProps> = ({
   closeCreateTextTile,
+  collectionRelayId,
 }) => {
   const { saveTextTile } = useTileActions();
 
   const handleTextTileCreate = () => {
-    saveTextTile();
+    saveTextTile(collectionRelayId);
     closeCreateTextTile();
   };
 

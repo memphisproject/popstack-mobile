@@ -115,6 +115,61 @@ columns and relationships of "collections"
 type collections implements Node {
   """An object relationship"""
   collections_tile: collections_tiles
+
+  """An array relationship"""
+  collections_tiles(
+    """distinct select on columns"""
+    distinct_on: [collections_tiles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_tiles_order_by!]
+
+    """filter the rows returned"""
+    where: collections_tiles_bool_exp
+  ): [collections_tiles!]!
+
+  """An aggregate relationship"""
+  collections_tiles_aggregate(
+    """distinct select on columns"""
+    distinct_on: [collections_tiles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_tiles_order_by!]
+
+    """filter the rows returned"""
+    where: collections_tiles_bool_exp
+  ): collections_tiles_aggregate!
+
+  """
+  fetch data from the table: "collections_tiles"
+  """
+  collections_tiles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [collections_tiles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [collections_tiles_order_by!]
+
+    """filter the rows returned"""
+    where: collections_tiles_bool_exp
+  ): collections_tilesConnection!
   created_at: timestamptz!
   id: ID!
   image: String
@@ -196,6 +251,7 @@ input collections_bool_exp {
   _not: collections_bool_exp
   _or: [collections_bool_exp!]
   collections_tile: collections_tiles_bool_exp
+  collections_tiles: collections_tiles_bool_exp
   created_at: timestamptz_comparison_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
@@ -217,6 +273,7 @@ input type for inserting data into table "collections"
 """
 input collections_insert_input {
   collections_tile: collections_tiles_obj_rel_insert_input
+  collections_tiles: collections_tiles_arr_rel_insert_input
   created_at: timestamptz
   id: uuid
   image: String
@@ -258,6 +315,7 @@ input collections_on_conflict {
 """Ordering options when selecting data from "collections"."""
 input collections_order_by {
   collections_tile: collections_tiles_order_by
+  collections_tiles_aggregate: collections_tiles_aggregate_order_by
   created_at: order_by
   id: order_by
   image: order_by
@@ -333,6 +391,70 @@ type collections_tilesEdge {
 }
 
 """
+aggregated selection of "collections_tiles"
+"""
+type collections_tiles_aggregate {
+  aggregate: collections_tiles_aggregate_fields
+  nodes: [collections_tiles!]!
+}
+
+"""
+aggregate fields of "collections_tiles"
+"""
+type collections_tiles_aggregate_fields {
+  avg: collections_tiles_avg_fields
+  count(columns: [collections_tiles_select_column!], distinct: Boolean): Int!
+  max: collections_tiles_max_fields
+  min: collections_tiles_min_fields
+  stddev: collections_tiles_stddev_fields
+  stddev_pop: collections_tiles_stddev_pop_fields
+  stddev_samp: collections_tiles_stddev_samp_fields
+  sum: collections_tiles_sum_fields
+  var_pop: collections_tiles_var_pop_fields
+  var_samp: collections_tiles_var_samp_fields
+  variance: collections_tiles_variance_fields
+}
+
+"""
+order by aggregate values of table "collections_tiles"
+"""
+input collections_tiles_aggregate_order_by {
+  avg: collections_tiles_avg_order_by
+  count: order_by
+  max: collections_tiles_max_order_by
+  min: collections_tiles_min_order_by
+  stddev: collections_tiles_stddev_order_by
+  stddev_pop: collections_tiles_stddev_pop_order_by
+  stddev_samp: collections_tiles_stddev_samp_order_by
+  sum: collections_tiles_sum_order_by
+  var_pop: collections_tiles_var_pop_order_by
+  var_samp: collections_tiles_var_samp_order_by
+  variance: collections_tiles_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "collections_tiles"
+"""
+input collections_tiles_arr_rel_insert_input {
+  data: [collections_tiles_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: collections_tiles_on_conflict
+}
+
+"""aggregate avg on columns"""
+type collections_tiles_avg_fields {
+  order: Float
+}
+
+"""
+order by avg() on columns of table "collections_tiles"
+"""
+input collections_tiles_avg_order_by {
+  order: order_by
+}
+
+"""
 Boolean expression to filter rows from the table "collections_tiles". All fields are combined with a logical 'AND'.
 """
 input collections_tiles_bool_exp {
@@ -353,9 +475,6 @@ input collections_tiles_bool_exp {
 unique or primary key constraints on table "collections_tiles"
 """
 enum collections_tiles_constraint {
-  """unique or primary key constraint"""
-  collections_tiles_collection_fk_key
-
   """unique or primary key constraint"""
   collections_tiles_pkey
 
@@ -382,6 +501,50 @@ input collections_tiles_insert_input {
   tile: tiles_obj_rel_insert_input
   tile_fk: uuid
   updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type collections_tiles_max_fields {
+  collection_fk: uuid
+  created_at: timestamptz
+  id: uuid
+  order: Int
+  tile_fk: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "collections_tiles"
+"""
+input collections_tiles_max_order_by {
+  collection_fk: order_by
+  created_at: order_by
+  id: order_by
+  order: order_by
+  tile_fk: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type collections_tiles_min_fields {
+  collection_fk: uuid
+  created_at: timestamptz
+  id: uuid
+  order: Int
+  tile_fk: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "collections_tiles"
+"""
+input collections_tiles_min_order_by {
+  collection_fk: order_by
+  created_at: order_by
+  id: order_by
+  order: order_by
+  tile_fk: order_by
+  updated_at: order_by
 }
 
 """
@@ -466,6 +629,54 @@ input collections_tiles_set_input {
   updated_at: timestamptz
 }
 
+"""aggregate stddev on columns"""
+type collections_tiles_stddev_fields {
+  order: Float
+}
+
+"""
+order by stddev() on columns of table "collections_tiles"
+"""
+input collections_tiles_stddev_order_by {
+  order: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type collections_tiles_stddev_pop_fields {
+  order: Float
+}
+
+"""
+order by stddev_pop() on columns of table "collections_tiles"
+"""
+input collections_tiles_stddev_pop_order_by {
+  order: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type collections_tiles_stddev_samp_fields {
+  order: Float
+}
+
+"""
+order by stddev_samp() on columns of table "collections_tiles"
+"""
+input collections_tiles_stddev_samp_order_by {
+  order: order_by
+}
+
+"""aggregate sum on columns"""
+type collections_tiles_sum_fields {
+  order: Int
+}
+
+"""
+order by sum() on columns of table "collections_tiles"
+"""
+input collections_tiles_sum_order_by {
+  order: order_by
+}
+
 """
 update columns of table "collections_tiles"
 """
@@ -487,6 +698,42 @@ enum collections_tiles_update_column {
 
   """column name"""
   updated_at
+}
+
+"""aggregate var_pop on columns"""
+type collections_tiles_var_pop_fields {
+  order: Float
+}
+
+"""
+order by var_pop() on columns of table "collections_tiles"
+"""
+input collections_tiles_var_pop_order_by {
+  order: order_by
+}
+
+"""aggregate var_samp on columns"""
+type collections_tiles_var_samp_fields {
+  order: Float
+}
+
+"""
+order by var_samp() on columns of table "collections_tiles"
+"""
+input collections_tiles_var_samp_order_by {
+  order: order_by
+}
+
+"""aggregate variance on columns"""
+type collections_tiles_variance_fields {
+  order: Float
+}
+
+"""
+order by variance() on columns of table "collections_tiles"
+"""
+input collections_tiles_variance_order_by {
+  order: order_by
 }
 
 """

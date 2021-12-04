@@ -29,9 +29,11 @@ const fetchQuery: FetchFunction = async (params, variables, _cacheConfig) => {
   return json;
 };
 
+const storeObject = new Store(new RecordSource(), {
+  gcReleaseBufferSize: 10,
+});
+
 export default new Environment({
   network: Network.create(fetchQuery),
-  store: new Store(new RecordSource(), {
-    gcReleaseBufferSize: 10,
-  }),
+  store: storeObject,
 });

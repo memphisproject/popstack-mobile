@@ -2,16 +2,11 @@ import React, { useState, Suspense, useEffect } from 'react';
 import { Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useFragment } from 'react-relay';
-import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
-import base64 from 'react-native-base64';
+import { graphql } from 'react-relay/hooks';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
 import TileDetails from '../../modals/TileDetails';
-import type {
-  CollectionQuery,
-  CollectionQueryResponse,
-} from '../../__generated__/CollectionQuery.graphql';
 import CreateTextTile from '../../modals/CreateTextTile';
 import { useTileActions } from '../../hooks/useTileActions';
 
@@ -38,7 +33,6 @@ const Collection: React.FC = () => {
   const [createTextTileModalOpen, setCreateTextTileModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log(openCreateTextTileModal);
     if (openCreateTextTileModal) {
       handleCreateTextTileModalOpen();
     } else {
@@ -51,36 +45,23 @@ const Collection: React.FC = () => {
       fragment Collection_collections on collections {
         id
         title
-      }
-    `,
-    collection,
-  );
-
-  const relayIdDecoded = base64.decode(collectionData.id).substring(30, 66);
-
-  const tilesData: CollectionQueryResponse = useLazyLoadQuery<CollectionQuery>(
-    graphql`
-      query CollectionQuery($id: uuid!) {
-        collections_tiles_connection(
-          where: { collection_fk: { _eq: $id } }
-          order_by: { order: asc }
-        ) {
-          edges {
-            node {
-              tile {
-                id
-                type
-                ...TextTile_tiles
-              }
+        collections_tiles_aggregate {
+          nodes {
+            id
+            order
+            tile {
+              id
+              type
+              ...TextTile_tiles
             }
           }
         }
       }
     `,
-    { id: relayIdDecoded },
+    collection,
   );
 
-  const tilesList = tilesData.collections_tiles_connection.edges;
+  const tilesList = collectionData.collections_tiles_aggregate.nodes;
 
   const handleCreateTextTileModalClose = () => {
     setCreateTextTileModalOpen(false);
@@ -134,12 +115,9 @@ const Collection: React.FC = () => {
       <TilesListWrapper>
         <TilesList
           data={tilesList}
-          keyExtractor={item => item.node.tile.id}
+          keyExtractor={item => item.tile.id}
           renderItem={({ item }) => (
-            <TextTile
-              onPress={handleTileDetailsModalOpen}
-              tile={item.node.tile}
-            />
+            <TextTile onPress={handleTileDetailsModalOpen} tile={item.tile} />
           )}
         />
       </TilesListWrapper>
@@ -149,7 +127,10 @@ const Collection: React.FC = () => {
       </Modal>
 
       <Modal visible={createTextTileModalOpen}>
-        <CreateTextTile closeCreateTextTile={handleCreateTextTileModalClose} />
+        <CreateTextTile
+          closeCreateTextTile={handleCreateTextTileModalClose}
+          collectionRelayId={collectionData.id}
+        />
       </Modal>
     </Container>
   );
