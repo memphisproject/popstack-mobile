@@ -9,7 +9,7 @@ export const Container = styled(Animated.View)`
   padding: 15px 15px;
 `;
 
-export const ActionWrapper = styled.View`
+export const ActionWrapper = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;

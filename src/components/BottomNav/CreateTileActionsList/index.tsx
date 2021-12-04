@@ -6,6 +6,8 @@ import {
 } from 'react-native-reanimated';
 import { mix } from 'react-native-redash';
 
+import { useTileActions } from '../../../hooks/useTileActions';
+
 import { Container, ActionWrapper, ActionIcon, Action } from './styles';
 
 interface CreateActionsProps {
@@ -24,18 +26,19 @@ const CreateTileActionList: React.FC<CreateActionsProps> = ({ isOpen }) => {
       },
     ],
   }));
+  const { createTile } = useTileActions();
 
   return (
     <Container style={animation}>
-      <ActionWrapper>
+      <ActionWrapper onPress={() => createTile('textTile')}>
         <ActionIcon name="copy" />
         <Action>Create Tile</Action>
       </ActionWrapper>
-      <ActionWrapper>
+      <ActionWrapper onPress={() => createTile('textTile')}>
         <ActionIcon name="copy" />
         <Action>Create Link Tile</Action>
       </ActionWrapper>
-      <ActionWrapper>
+      <ActionWrapper onPress={() => createTile('textTile')}>
         <ActionIcon name="copy" />
         <Action>Create Query Tile</Action>
       </ActionWrapper>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useFragment } from 'react-relay';
 import { graphql } from 'react-relay/hooks';
+import { useWindowDimensions } from 'react-native';
+import RenderHtml from 'react-native-render-html';
 
 import TileContainer from '../TileContainer';
 import type {
@@ -8,7 +10,7 @@ import type {
   TextTile_tiles$key,
 } from '../../../__generated__/TextTile_tiles.graphql';
 
-import { Container, Text } from './styles';
+import { Container } from './styles';
 
 interface TextTileProps {
   onPress: () => void;
@@ -16,6 +18,7 @@ interface TextTileProps {
 }
 
 const TextTile: React.FC<TextTileProps> = ({ onPress, tile }) => {
+  const { width } = useWindowDimensions();
   const data: TextTile_tiles = useFragment(
     graphql`
       fragment TextTile_tiles on tiles {
@@ -28,7 +31,7 @@ const TextTile: React.FC<TextTileProps> = ({ onPress, tile }) => {
   return (
     <Container onPress={onPress}>
       <TileContainer>
-        <Text>{data?.content.html}</Text>
+        <RenderHtml contentWidth={width} source={data.content} />
       </TileContainer>
     </Container>
   );

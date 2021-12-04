@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useFragment } from 'react-relay';
@@ -12,6 +12,8 @@ import type {
   CollectionQuery,
   CollectionQueryResponse,
 } from '../../__generated__/CollectionQuery.graphql';
+import CreateTextTile from '../../modals/CreateTextTile';
+import { useTileActions } from '../../hooks/useTileActions';
 
 import {
   Container,
@@ -30,8 +32,19 @@ import {
 
 const Collection: React.FC = () => {
   const route = useRoute();
+  const { openCreateTextTileModal } = useTileActions();
   const { collection } = route.params;
   const [tileDetailsModalOpen, setTileDetailsModalOpen] = useState(false);
+  const [createTextTileModalOpen, setCreateTextTileModalOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(openCreateTextTileModal);
+    if (openCreateTextTileModal) {
+      handleCreateTextTileModalOpen();
+    } else {
+      handleCreateTextTileModalClose();
+    }
+  }, [openCreateTextTileModal]);
 
   const collectionData = useFragment(
     graphql`
@@ -68,6 +81,14 @@ const Collection: React.FC = () => {
   );
 
   const tilesList = tilesData.collections_tiles_connection.edges;
+
+  const handleCreateTextTileModalClose = () => {
+    setCreateTextTileModalOpen(false);
+  };
+
+  const handleCreateTextTileModalOpen = () => {
+    setCreateTextTileModalOpen(true);
+  };
 
   const handleTileDetailsModalClose = () => {
     setTileDetailsModalOpen(false);
@@ -125,6 +146,10 @@ const Collection: React.FC = () => {
 
       <Modal visible={tileDetailsModalOpen}>
         <TileDetails closeTileDetails={handleTileDetailsModalClose} />
+      </Modal>
+
+      <Modal visible={createTextTileModalOpen}>
+        <CreateTextTile closeCreateTextTile={handleCreateTextTileModalClose} />
       </Modal>
     </Container>
   );

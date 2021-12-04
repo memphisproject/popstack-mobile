@@ -9,7 +9,6 @@ import {
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
-import { Text } from 'react-native';
 
 import theme from './src/global/styles/theme';
 // import darkTheme from './src/global/styles/dark-theme';
@@ -33,7 +32,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <AppProvider>
           <NavigationContainer>
-            <Suspense fallback={<Text>loading App...</Text>}>
+            <Suspense fallback={<AppLoading />}>
               <AppRoutes />
             </Suspense>
           </NavigationContainer>

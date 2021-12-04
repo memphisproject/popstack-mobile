@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
