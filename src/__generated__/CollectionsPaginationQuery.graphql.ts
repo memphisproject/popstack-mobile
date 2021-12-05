@@ -28,6 +28,20 @@ query CollectionsPaginationQuery(
   ...CollectionsFrag_collections_XKRaI
 }
 
+fragment CollectionsComponent_collections on users_collections {
+  collection {
+    id
+    title
+  }
+}
+
+fragment CollectionsFavourite_collections on users_collections {
+  collection {
+    id
+    title
+  }
+}
+
 fragment CollectionsFrag_collections_XKRaI on query_root {
   users_collections_connection(first: $first, after: $after, where: {user: {id: {_eq: $id}}}, order_by: {order: asc}) {
     edges {
@@ -36,6 +50,8 @@ fragment CollectionsFrag_collections_XKRaI on query_root {
         id
         is_pinned
         ...CollectionsListItemFrag_collections
+        ...CollectionsFavourite_collections
+        ...CollectionsComponent_collections
         __typename
       }
     }
@@ -283,12 +299,12 @@ const node: ConcreteRequest = (function () {
             ]
         },
         "params": {
-            "cacheID": "311ee2855067a3c59ef86f3bdd1a54e3",
+            "cacheID": "36baafa1d699eed6090613ca93a91447",
             "id": null,
             "metadata": {},
             "name": "CollectionsPaginationQuery",
             "operationKind": "query",
-            "text": "query CollectionsPaginationQuery(\n  $first: Int!\n  $after: String\n  $id: uuid!\n) {\n  ...CollectionsFrag_collections_XKRaI\n}\n\nfragment CollectionsFrag_collections_XKRaI on query_root {\n  users_collections_connection(first: $first, after: $after, where: {user: {id: {_eq: $id}}}, order_by: {order: asc}) {\n    edges {\n      cursor\n      node {\n        id\n        is_pinned\n        ...CollectionsListItemFrag_collections\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment CollectionsListItemFrag_collections on users_collections {\n  collection {\n    id\n    image\n    title\n    updated_at\n  }\n}\n"
+            "text": "query CollectionsPaginationQuery(\n  $first: Int!\n  $after: String\n  $id: uuid!\n) {\n  ...CollectionsFrag_collections_XKRaI\n}\n\nfragment CollectionsComponent_collections on users_collections {\n  collection {\n    id\n    title\n  }\n}\n\nfragment CollectionsFavourite_collections on users_collections {\n  collection {\n    id\n    title\n  }\n}\n\nfragment CollectionsFrag_collections_XKRaI on query_root {\n  users_collections_connection(first: $first, after: $after, where: {user: {id: {_eq: $id}}}, order_by: {order: asc}) {\n    edges {\n      cursor\n      node {\n        id\n        is_pinned\n        ...CollectionsListItemFrag_collections\n        ...CollectionsFavourite_collections\n        ...CollectionsComponent_collections\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment CollectionsListItemFrag_collections on users_collections {\n  collection {\n    id\n    image\n    title\n    updated_at\n  }\n}\n"
         }
     } as any;
 })();

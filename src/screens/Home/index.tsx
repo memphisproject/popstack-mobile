@@ -43,9 +43,11 @@ const Home: React.FC<HomeProps> = ({ collectionQueryRef }) => {
 
   const collectionsList = data?.users_collections_connection?.edges || [];
 
-  console.log(collectionsList);
-
   const navigation = useNavigation();
+
+  const handleCollectionNavigation = (collectionRef: Users_CollectionsEdge) => {
+    navigation.navigate('Collection' as never, { collection: collectionRef });
+  };
 
   return (
     <Container>
@@ -65,9 +67,7 @@ const Home: React.FC<HomeProps> = ({ collectionQueryRef }) => {
               <FavouriteCollection
                 key={item?.node?.id}
                 collection={item.node}
-                onPress={() => {
-                  navigation.navigate('Collection' as never);
-                }}
+                onPress={() => handleCollectionNavigation(item.node)}
               />
             ))}
       </FavouritesWrapper>

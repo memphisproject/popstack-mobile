@@ -27,6 +27,8 @@ export const collectionsHomeFragment = graphql`
           id
           is_pinned
           ...CollectionsListItemFrag_collections
+          ...CollectionsFavourite_collections
+          ...CollectionsComponent_collections
         }
       }
       pageInfo {
@@ -50,6 +52,15 @@ export const collectionListItemFragment = graphql`
 
 export const collectionFavouriteFragment = graphql`
   fragment CollectionsFavourite_collections on users_collections {
+    collection {
+      id
+      title
+    }
+  }
+`;
+
+export const collectionComponentFragment = graphql`
+  fragment CollectionsComponent_collections on users_collections {
     collection {
       id
       title

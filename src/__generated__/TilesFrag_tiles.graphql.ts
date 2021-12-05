@@ -4,14 +4,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import {  } from "relay-runtime";
-export type CollectionsFrag_collections = {
-    readonly users_collections_connection: {
+export type TilesFrag_tiles = {
+    readonly collections_tiles_connection: {
         readonly edges: ReadonlyArray<{
             readonly cursor: string;
             readonly node: {
                 readonly id: string;
-                readonly is_pinned: boolean;
-                readonly " $fragmentRefs": FragmentRefs<"CollectionsListItemFrag_collections" | "CollectionsFavourite_collections" | "CollectionsComponent_collections">;
+                readonly order: number;
+                readonly " $fragmentRefs": FragmentRefs<"TilesListItemFrag_collections" | "TilesTextFrag_collections">;
             };
         }>;
         readonly pageInfo: {
@@ -19,19 +19,19 @@ export type CollectionsFrag_collections = {
             readonly endCursor: string;
         };
     };
-    readonly " $refType": "CollectionsFrag_collections";
+    readonly " $refType": "TilesFrag_tiles";
 };
-export type CollectionsFrag_collections$data = CollectionsFrag_collections;
-export type CollectionsFrag_collections$key = {
-    readonly " $data"?: CollectionsFrag_collections$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CollectionsFrag_collections">;
+export type TilesFrag_tiles$data = TilesFrag_tiles;
+export type TilesFrag_tiles$key = {
+    readonly " $data"?: TilesFrag_tiles$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"TilesFrag_tiles">;
 };
 
 
 
 const node: ReaderFragment = (function () {
     var v0 = [
-        "users_collections_connection"
+        "collections_tiles_connection"
     ];
     return {
         "argumentDefinitions": [
@@ -71,13 +71,13 @@ const node: ReaderFragment = (function () {
                     "path": (v0 /*: any*/)
                 },
                 "fragmentPathInResult": [],
-                "operation": require('./CollectionsQuery.graphql')
+                "operation": require('./CollectionsTilesQuery.graphql')
             }
         },
-        "name": "CollectionsFrag_collections",
+        "name": "TilesFrag_tiles",
         "selections": [
             {
-                "alias": "users_collections_connection",
+                "alias": "collections_tiles_connection",
                 "args": [
                     {
                         "kind": "Literal",
@@ -103,22 +103,22 @@ const node: ReaderFragment = (function () {
                                     }
                                 ],
                                 "kind": "ObjectValue",
-                                "name": "user"
+                                "name": "collection"
                             }
                         ],
                         "kind": "ObjectValue",
                         "name": "where"
                     }
                 ],
-                "concreteType": "users_collectionsConnection",
+                "concreteType": "collections_tilesConnection",
                 "kind": "LinkedField",
-                "name": "__search_users_collections_connection_connection",
+                "name": "__search_collections_tiles_connection_connection",
                 "plural": false,
                 "selections": [
                     {
                         "alias": null,
                         "args": null,
-                        "concreteType": "users_collectionsEdge",
+                        "concreteType": "collections_tilesEdge",
                         "kind": "LinkedField",
                         "name": "edges",
                         "plural": true,
@@ -133,7 +133,7 @@ const node: ReaderFragment = (function () {
                             {
                                 "alias": null,
                                 "args": null,
-                                "concreteType": "users_collections",
+                                "concreteType": "collections_tiles",
                                 "kind": "LinkedField",
                                 "name": "node",
                                 "plural": false,
@@ -149,7 +149,7 @@ const node: ReaderFragment = (function () {
                                         "alias": null,
                                         "args": null,
                                         "kind": "ScalarField",
-                                        "name": "is_pinned",
+                                        "name": "order",
                                         "storageKey": null
                                     },
                                     {
@@ -162,17 +162,12 @@ const node: ReaderFragment = (function () {
                                     {
                                         "args": null,
                                         "kind": "FragmentSpread",
-                                        "name": "CollectionsListItemFrag_collections"
+                                        "name": "TilesListItemFrag_collections"
                                     },
                                     {
                                         "args": null,
                                         "kind": "FragmentSpread",
-                                        "name": "CollectionsFavourite_collections"
-                                    },
-                                    {
-                                        "args": null,
-                                        "kind": "FragmentSpread",
-                                        "name": "CollectionsComponent_collections"
+                                        "name": "TilesTextFrag_collections"
                                     }
                                 ],
                                 "storageKey": null
@@ -213,5 +208,5 @@ const node: ReaderFragment = (function () {
         "abstractKey": null
     } as any;
 })();
-(node as any).hash = '9a852c95f31dfc80d4ddc1b2f9a0f3d7';
+(node as any).hash = '9d06f49f6dc1b9ec502b5a9a34f403e0';
 export default node;

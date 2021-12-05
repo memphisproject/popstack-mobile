@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useQueryLoader } from 'react-relay';
+import AppLoading from 'expo-app-loading';
 
 import { collectionsQuery } from '../../relay/queries/Collections';
 import type { CollectionsQuery } from '../../__generated__/CollectionsQuery.graphql';
@@ -20,7 +21,11 @@ const RelayHomeWrapper: React.FC = () => {
 
   return (
     <Container>
-      {collectionsQueryRef && <Home collectionQueryRef={collectionsQueryRef} />}
+      <Suspense fallback={<AppLoading />}>
+        {collectionsQueryRef && (
+          <Home collectionQueryRef={collectionsQueryRef} />
+        )}
+      </Suspense>
     </Container>
   );
 };

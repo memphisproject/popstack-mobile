@@ -29,7 +29,7 @@ const CollectionListItem: React.FC<CollectionListItemProps> = ({
       <TitleWrapper>
         <Title>{data?.collection?.title}</Title>
         <LastUpdated>
-          updated by {format(new Date(data?.collection?.updated_at), 'd.M.uu')}
+          updated by {format(new Date(data.collection.updated_at), 'd.M.uu')}
         </LastUpdated>
       </TitleWrapper>
       <LogoWrapper hasImage={!!data?.collection.image}>

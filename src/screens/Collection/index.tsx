@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
 import type { PreloadedQuery } from 'react-relay';
-import { usePaginationFragment, usePreloadedQuery } from 'react-relay';
+import {
+  useFragment,
+  usePaginationFragment,
+  usePreloadedQuery,
+} from 'react-relay';
+import { useRoute } from '@react-navigation/native';
 
 import CategoryLabel from '../../components/CategoryLabel';
 import TextTile from '../../components/Tile/TextTile';
 import TileDetails from '../../modals/TileDetails';
-import type { CollectionsQuery } from '../../__generated__/CollectionsQuery.graphql';
-import {
-  collectionsFragment,
-  collectionsQuery,
-} from '../../relay/queries/Collections';
-import type { CollectionsPaginationQuery } from '../../__generated__/CollectionsPaginationQuery.graphql';
-import type { CollectionsFrag_collections$key } from '../../__generated__/CollectionsFrag_collections.graphql';
+import type { CollectionsTilesQuery } from '../../__generated__/CollectionsTilesQuery.graphql';
+import { collectionFragment, tilesQuery } from '../../relay/queries/Tiles';
+import type { TilesPaginationQuery } from '../../__generated__/TilesPaginationQuery.graphql';
+import type { TilesFrag_tiles$key } from '../../__generated__/TilesFrag_tiles.graphql';
+import { collectionFavouriteFragment } from '../../relay/queries/Collections';
+import type { CollectionsComponent_collections$key } from '../../__generated__/CollectionsComponent_collections.graphql';
 
 import {
   Container,
@@ -26,9 +30,34 @@ import {
   SocialMetricLabel,
   SocialMetricIcon,
   TilesListWrapper,
+  TilesList,
 } from './styles';
 
-const Collection: React.FC = () => {
+type CollectionProps = {
+  tilesQueryRef: PreloadedQuery<CollectionsTilesQuery, Record<string, unknown>>;
+};
+
+type NavigationProps = {
+  collection: CollectionsComponent_collections$key;
+};
+
+const Collection: React.FC<CollectionProps> = ({ tilesQueryRef }) => {
+  const response = usePreloadedQuery<CollectionsTilesQuery>(
+    tilesQuery,
+    tilesQueryRef,
+  );
+
+  const { data, isLoadingNext, loadNext } = usePaginationFragment<
+    TilesPaginationQuery,
+    TilesFrag_tiles$key
+  >(collectionFragment, response);
+
+  const tilesList = data?.collections_tiles_connection?.edges || [];
+
+  const route = useRoute();
+  const { collection } = route.params as NavigationProps;
+  const collectionData = useFragment(collectionFavouriteFragment, collection);
+
   const [tileDetailsModalOpen, setTileDetailsModalOpen] = useState(false);
 
   const handleTileDetailsModalClose = () => {
@@ -43,7 +72,7 @@ const Collection: React.FC = () => {
     <Container>
       <Header>
         <TitleWrapper>
-          <Title>My personal Instagram about psychology</Title>
+          <Title>{collectionData?.collection?.title}</Title>
         </TitleWrapper>
 
         <Icon name="info" />
@@ -71,7 +100,16 @@ const Collection: React.FC = () => {
       </SocialMetricsBar>
 
       <TilesListWrapper>
-        <TextTile onPress={handleTileDetailsModalOpen} />
+        <TilesList
+          data={tilesList}
+          keyExtractor={item => item?.node?.id}
+          renderItem={({ item }) => (
+            <TextTile onPress={handleTileDetailsModalOpen} tile={item.node} />
+          )}
+          refreshing={isLoadingNext}
+          onEndReachedThreshold={0.1}
+          onEndReached={() => loadNext(10)}
+        />
       </TilesListWrapper>
 
       <Modal visible={tileDetailsModalOpen}>

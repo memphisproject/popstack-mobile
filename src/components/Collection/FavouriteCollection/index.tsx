@@ -2,9 +2,9 @@ import React from 'react';
 import { useFragment } from 'react-relay';
 
 import CategoryLabel from '../../CategoryLabel';
-import { CollectionsListItemFrag_collections$key } from '../../../__generated__/CollectionsListItemFrag_collections.graphql';
+// eslint-disable-next-line max-len
 import type { CollectionsFavourite_collections$key } from '../../../__generated__/CollectionsFavourite_collections.graphql';
-import { collectionListItemFragment } from '../../../relay/queries/Collections';
+import { collectionFavouriteFragment } from '../../../relay/queries/Collections';
 
 import { Container, Header, TotalTileCount, Title } from './styles';
 
@@ -17,7 +17,7 @@ const FavouriteCollection: React.FC<FavouriteCollectionProps> = ({
   onPress,
   collection,
 }) => {
-  const data = useFragment(collectionListItemFragment, collection);
+  const data = useFragment(collectionFavouriteFragment, collection);
 
   return (
     <Container onPress={onPress}>

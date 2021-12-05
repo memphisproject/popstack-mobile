@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
 
-import Collection from '../screens/Collection';
 import BottomTabBar from '../components/BottomNav/BottomTabBar';
 import RelayHomeWrapper from '../components/RelayHomeWrapper';
+import RelayCollectionWrapper from '../components/RelayCollectionWrapper';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => {
       tabBar={props => <BottomTabBar {...props} />}
     >
       <Screen name="Home" component={RelayHomeWrapper} />
-      <Screen name="Collection" component={Collection} />
+      <Screen name="Collection" component={RelayCollectionWrapper} />
     </Navigator>
   );
 };

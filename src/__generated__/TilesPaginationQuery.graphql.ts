@@ -4,54 +4,39 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import {  } from "relay-runtime";
-export type CollectionsQueryVariables = {
+export type TilesPaginationQueryVariables = {
+    first: number;
     after?: string | null | undefined;
-    first?: number | null | undefined;
-    id?: unknown | null | undefined;
+    id: unknown;
 };
-export type CollectionsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"CollectionsFrag_collections">;
+export type TilesPaginationQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"TilesFrag_tiles">;
 };
-export type CollectionsQuery = {
-    readonly response: CollectionsQueryResponse;
-    readonly variables: CollectionsQueryVariables;
+export type TilesPaginationQuery = {
+    readonly response: TilesPaginationQueryResponse;
+    readonly variables: TilesPaginationQueryVariables;
 };
 
 
 
 /*
-query CollectionsQuery(
+query TilesPaginationQuery(
+  $first: Int!
   $after: String
-  $first: Int
-  $id: uuid
+  $id: uuid!
 ) {
-  ...CollectionsFrag_collections_XKRaI
+  ...TilesFrag_tiles_XKRaI
 }
 
-fragment CollectionsComponent_collections on users_collections {
-  collection {
-    id
-    title
-  }
-}
-
-fragment CollectionsFavourite_collections on users_collections {
-  collection {
-    id
-    title
-  }
-}
-
-fragment CollectionsFrag_collections_XKRaI on query_root {
-  users_collections_connection(first: $first, after: $after, where: {user: {id: {_eq: $id}}}, order_by: {order: asc}) {
+fragment TilesFrag_tiles_XKRaI on query_root {
+  collections_tiles_connection(first: $first, after: $after, where: {collection: {id: {_eq: $id}}}, order_by: {order: asc}) {
     edges {
       cursor
       node {
         id
-        is_pinned
-        ...CollectionsListItemFrag_collections
-        ...CollectionsFavourite_collections
-        ...CollectionsComponent_collections
+        order
+        ...TilesListItemFrag_collections
+        ...TilesTextFrag_collections
         __typename
       }
     }
@@ -62,44 +47,46 @@ fragment CollectionsFrag_collections_XKRaI on query_root {
   }
 }
 
-fragment CollectionsListItemFrag_collections on users_collections {
-  collection {
+fragment TilesListItemFrag_collections on collections_tiles {
+  tile {
     id
-    image
-    title
-    updated_at
+    content
+    type
+  }
+}
+
+fragment TilesTextFrag_collections on collections_tiles {
+  tile {
+    id
+    content
   }
 }
 */
 
 const node: ConcreteRequest = (function () {
-    var v0 = [
-        {
-            "defaultValue": null,
-            "kind": "LocalArgument",
-            "name": "after"
-        } as any,
-        {
-            "defaultValue": null,
-            "kind": "LocalArgument",
-            "name": "first"
-        } as any,
-        {
-            "defaultValue": null,
-            "kind": "LocalArgument",
-            "name": "id"
-        } as any
-    ], v1 = {
+    var v0 = {
+        "defaultValue": null,
+        "kind": "LocalArgument",
+        "name": "after"
+    } as any, v1 = {
+        "defaultValue": null,
+        "kind": "LocalArgument",
+        "name": "first"
+    } as any, v2 = {
+        "defaultValue": null,
+        "kind": "LocalArgument",
+        "name": "id"
+    } as any, v3 = {
         "kind": "Variable",
         "name": "after",
         "variableName": "after"
-    } as any, v2 = {
+    } as any, v4 = {
         "kind": "Variable",
         "name": "first",
         "variableName": "first"
-    } as any, v3 = [
-        (v1 /*: any*/),
-        (v2 /*: any*/),
+    } as any, v5 = [
+        (v3 /*: any*/),
+        (v4 /*: any*/),
         {
             "kind": "Literal",
             "name": "order_by",
@@ -124,13 +111,13 @@ const node: ConcreteRequest = (function () {
                         }
                     ],
                     "kind": "ObjectValue",
-                    "name": "user"
+                    "name": "collection"
                 }
             ],
             "kind": "ObjectValue",
             "name": "where"
         } as any
-    ], v4 = {
+    ], v6 = {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
@@ -139,15 +126,19 @@ const node: ConcreteRequest = (function () {
     } as any;
     return {
         "fragment": {
-            "argumentDefinitions": (v0 /*: any*/),
+            "argumentDefinitions": [
+                (v0 /*: any*/),
+                (v1 /*: any*/),
+                (v2 /*: any*/)
+            ],
             "kind": "Fragment",
             "metadata": null,
-            "name": "CollectionsQuery",
+            "name": "TilesPaginationQuery",
             "selections": [
                 {
                     "args": [
-                        (v1 /*: any*/),
-                        (v2 /*: any*/),
+                        (v3 /*: any*/),
+                        (v4 /*: any*/),
                         {
                             "kind": "Variable",
                             "name": "id",
@@ -155,7 +146,7 @@ const node: ConcreteRequest = (function () {
                         }
                     ],
                     "kind": "FragmentSpread",
-                    "name": "CollectionsFrag_collections"
+                    "name": "TilesFrag_tiles"
                 }
             ],
             "type": "query_root",
@@ -163,22 +154,26 @@ const node: ConcreteRequest = (function () {
         },
         "kind": "Request",
         "operation": {
-            "argumentDefinitions": (v0 /*: any*/),
+            "argumentDefinitions": [
+                (v1 /*: any*/),
+                (v0 /*: any*/),
+                (v2 /*: any*/)
+            ],
             "kind": "Operation",
-            "name": "CollectionsQuery",
+            "name": "TilesPaginationQuery",
             "selections": [
                 {
                     "alias": null,
-                    "args": (v3 /*: any*/),
-                    "concreteType": "users_collectionsConnection",
+                    "args": (v5 /*: any*/),
+                    "concreteType": "collections_tilesConnection",
                     "kind": "LinkedField",
-                    "name": "users_collections_connection",
+                    "name": "collections_tiles_connection",
                     "plural": false,
                     "selections": [
                         {
                             "alias": null,
                             "args": null,
-                            "concreteType": "users_collectionsEdge",
+                            "concreteType": "collections_tilesEdge",
                             "kind": "LinkedField",
                             "name": "edges",
                             "plural": true,
@@ -193,47 +188,40 @@ const node: ConcreteRequest = (function () {
                                 {
                                     "alias": null,
                                     "args": null,
-                                    "concreteType": "users_collections",
+                                    "concreteType": "collections_tiles",
                                     "kind": "LinkedField",
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                        (v4 /*: any*/),
+                                        (v6 /*: any*/),
                                         {
                                             "alias": null,
                                             "args": null,
                                             "kind": "ScalarField",
-                                            "name": "is_pinned",
+                                            "name": "order",
                                             "storageKey": null
                                         },
                                         {
                                             "alias": null,
                                             "args": null,
-                                            "concreteType": "collections",
+                                            "concreteType": "tiles",
                                             "kind": "LinkedField",
-                                            "name": "collection",
+                                            "name": "tile",
                                             "plural": false,
                                             "selections": [
-                                                (v4 /*: any*/),
+                                                (v6 /*: any*/),
                                                 {
                                                     "alias": null,
                                                     "args": null,
                                                     "kind": "ScalarField",
-                                                    "name": "image",
+                                                    "name": "content",
                                                     "storageKey": null
                                                 },
                                                 {
                                                     "alias": null,
                                                     "args": null,
                                                     "kind": "ScalarField",
-                                                    "name": "title",
-                                                    "storageKey": null
-                                                },
-                                                {
-                                                    "alias": null,
-                                                    "args": null,
-                                                    "kind": "ScalarField",
-                                                    "name": "updated_at",
+                                                    "name": "type",
                                                     "storageKey": null
                                                 }
                                             ],
@@ -282,27 +270,27 @@ const node: ConcreteRequest = (function () {
                 },
                 {
                     "alias": null,
-                    "args": (v3 /*: any*/),
+                    "args": (v5 /*: any*/),
                     "filters": [
                         "where",
                         "order_by"
                     ],
                     "handle": "connection",
-                    "key": "search_users_collections_connection",
+                    "key": "search_collections_tiles_connection",
                     "kind": "LinkedHandle",
-                    "name": "users_collections_connection"
+                    "name": "collections_tiles_connection"
                 }
             ]
         },
         "params": {
-            "cacheID": "8eb4604ed2736c9258b926dec9cc6799",
+            "cacheID": "97579e515756ea0c094e13a283947d14",
             "id": null,
             "metadata": {},
-            "name": "CollectionsQuery",
+            "name": "TilesPaginationQuery",
             "operationKind": "query",
-            "text": "query CollectionsQuery(\n  $after: String\n  $first: Int\n  $id: uuid\n) {\n  ...CollectionsFrag_collections_XKRaI\n}\n\nfragment CollectionsComponent_collections on users_collections {\n  collection {\n    id\n    title\n  }\n}\n\nfragment CollectionsFavourite_collections on users_collections {\n  collection {\n    id\n    title\n  }\n}\n\nfragment CollectionsFrag_collections_XKRaI on query_root {\n  users_collections_connection(first: $first, after: $after, where: {user: {id: {_eq: $id}}}, order_by: {order: asc}) {\n    edges {\n      cursor\n      node {\n        id\n        is_pinned\n        ...CollectionsListItemFrag_collections\n        ...CollectionsFavourite_collections\n        ...CollectionsComponent_collections\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment CollectionsListItemFrag_collections on users_collections {\n  collection {\n    id\n    image\n    title\n    updated_at\n  }\n}\n"
+            "text": "query TilesPaginationQuery(\n  $first: Int!\n  $after: String\n  $id: uuid!\n) {\n  ...TilesFrag_tiles_XKRaI\n}\n\nfragment TilesFrag_tiles_XKRaI on query_root {\n  collections_tiles_connection(first: $first, after: $after, where: {collection: {id: {_eq: $id}}}, order_by: {order: asc}) {\n    edges {\n      cursor\n      node {\n        id\n        order\n        ...TilesListItemFrag_collections\n        ...TilesTextFrag_collections\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment TilesListItemFrag_collections on collections_tiles {\n  tile {\n    id\n    content\n    type\n  }\n}\n\nfragment TilesTextFrag_collections on collections_tiles {\n  tile {\n    id\n    content\n  }\n}\n"
         }
     } as any;
 })();
-(node as any).hash = '9a852c95f31dfc80d4ddc1b2f9a0f3d7';
+(node as any).hash = '54d17022ebd866c422740ded6a51ab3b';
 export default node;
